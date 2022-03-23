@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
-const Campground = require('../models/campground')
-const faker = require('faker')
+const Campground = require('../models/campgroundModel')
+
 const data = require('./data')
-const { places, descriptors } = require('./seedHelpers')
+const { places, descriptors, images } = require('./seedHelpers')
 
 //connect Mongo
-mongoose.connect("mongodb+srv://bachar78:BrasiliA2018@react-camping.5ylye.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+mongoose.connect(
+  'mongodb+srv://bachar78:BrasiliA2018@react-camping.5ylye.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+)
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error'))
 db.once('open', () => {
@@ -17,30 +19,28 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)]
 const seedDb = async () => {
   await Campground.deleteMany({})
   for (let i = 0; i < 74; i++) {
-    const camp = new Campground({
+    await Campground.create({
       title: `${sample(descriptors)} ${sample(places)}`,
       location: data[i].State + '-' + data[i].City,
       price: Math.floor(Math.random() * 150),
-      description: faker.lorem.paragraph(),
+      description:
+        'Camping is an outdoor activity that involves staying the night/more than one night in a protective shelter out in nature.',
       state: data[i].State,
       latitude: data[i].Latitude,
       longitude: data[i].Longitude,
+      Zip_code: data[i].Zip_code,
+      forSell: false,
       images: [
         {
-          url: 'https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-          filename: 'Bach-camp/ivbscp9s0c3phopixbyt',
+          url: sample(images),
+          filename: 'Bach-camp/camping-life',
         },
         {
-          url: 'https://images.unsplash.com/photo-1525811902-f2342640856e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
-          filename: 'Bach-camp/ijkaqhvasx3pxzxyfvkj',
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-          filename: 'Bach-camp/ijkaqhvasx3pxzxyfvkj',
+          url: sample(images),
+          filename: 'Bach-camp/camping-life',
         },
       ],
     })
-    await camp.save()
   }
 }
 

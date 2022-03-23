@@ -24,13 +24,26 @@ const CampgroundSchema = new Schema(
       type: String,
       required: true,
     },
-    images: [ImageSchema],
-    longitude: {
-      type: Number,
+    images: [
+      {
+        url: {
+          type: String,
+          required: true,
+        },
+        filename: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    latitude: Number,
+    longitude: Number,
+    state: {
+      type: String,
       required: true,
     },
-    latitude: {
-      type: Number,
+    Zip_code: {
+      type: String,
       required: true,
     },
     forSell: {
