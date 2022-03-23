@@ -3,6 +3,7 @@ const colors = require('colors')
 const dotenv = require('dotenv').config()
 const connectDB = require('./config/db.js')
 const PORT = process.env.PORT || 5000
+const campgroundsRoutes = require('./routes/campingRoutes')
 
 
 //connect to database
@@ -20,8 +21,8 @@ app.get('/', (req, res) => {
 })
 
 //Routers
-app.use('/api/campgrounds', memberRoutes)
-app.use('/api/reviews', tasksRoutes)
+app.use('/api/campgrounds', campgroundsRoutes)
+// app.use('/api/reviews', reviewsRoutes)
 
 
 //Error Handler middleware
