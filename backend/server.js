@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 5000
 
 
 //connect to database
-// connectDB()
+connectDB()
 
 const app = express()
 
@@ -18,9 +18,10 @@ app.use(express.json({ limit: '50mb' }))
 app.get('/', (req, res) => {
   res.status(200).send({ message: 'Welcome' })
 })
+
 //Routers
-// app.use('/api/campgrounds', memberRoutes)
-// app.use('/api/reviews', tasksRoutes)
+app.use('/api/campgrounds', memberRoutes)
+app.use('/api/reviews', tasksRoutes)
 
 
 //Error Handler middleware
