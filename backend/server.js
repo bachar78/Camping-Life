@@ -3,8 +3,8 @@ const colors = require('colors')
 const dotenv = require('dotenv').config()
 const connectDB = require('./config/db.js')
 const PORT = process.env.PORT || 5000
-const campgroundsRoutes = require('./routes/campingRoutes')
-
+const campgroundsRoutes = require('./routes/campgroundsRoutes')
+const {errorHandler} = require('./middleware/errorHandler')
 
 //connect to database
 connectDB()
@@ -24,8 +24,7 @@ app.get('/', (req, res) => {
 app.use('/api/campgrounds', campgroundsRoutes)
 // app.use('/api/reviews', reviewsRoutes)
 
-
 //Error Handler middleware
-// app.use()
+app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`server starts on port ${PORT}`))

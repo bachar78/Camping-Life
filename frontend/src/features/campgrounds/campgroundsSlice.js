@@ -51,39 +51,42 @@ const initialState = {
 //   }
 // )
 
-// //View a single task
-// export const getTask = createAsyncThunk(
-//   'task/get',
-//   async (taskId, thunkAPI) => {
-//     try {
-//       const token = thunkAPI.getState().auth.member.token
-//       return await taskService.getTask(taskId, token)
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
+//View a single Campground
+export const getCampground = createAsyncThunk(
+  'campground/get',
+  async (campId, thunkAPI) => {
+    try {
+      return await campgroundsService.getCampground(campId)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
 
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
-// // View my Tasks
-// export const getTasks = createAsyncThunk('task/getAll', async (_, thunkAPI) => {
-//   try {
-//     const token = thunkAPI.getState().auth.member.token
-//     return await taskService.getTasks(token)
-//   } catch (error) {
-//     const message =
-//       (error.response && error.response.data && error.response.data.message) ||
-//       error.message ||
-//       error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+// View all Campground
+export const getCampgrounds = createAsyncThunk(
+  'campgrounds/getAll',
+  async (_, thunkAPI) => {
+    try {
+      return await campgroundsService.getCampgrounds()
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
 
-//     return thunkAPI.rejectWithValue(message)
-//   }
-// })
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 // // Delete a finished Task
 // export const deleteTask = createAsyncThunk(
 //   'task/delete',
@@ -111,7 +114,33 @@ export const campgroundsSlice = createSlice({
     reset: (state) => initialState,
   },
   extraReducers: (builder) => {
-    
+    builder
+      .addCase(getCampgrounds.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getCampgrounds.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.campgrounds = action.payload
+      })
+      .addCase(getCampgrounds.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getCampground.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getCampground.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.campground = action.payload
+      })
+      .addCase(getCampground.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
   },
 })
 
