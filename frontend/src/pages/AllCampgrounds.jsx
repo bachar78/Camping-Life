@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { reset, getCampgrounds } from '../features/campgrounds/campgroundsSlice'
 import Spinner from '../components/Spinner'
+import { Link, useNavigate } from 'react-router-dom'
 const AllCampgrounds = () => {
   const dispatch = useDispatch()
   const { campgrounds, isError, isLoading, isSuccess } = useSelector(
@@ -13,7 +14,7 @@ const AllCampgrounds = () => {
         dispatch(reset())
       }
     }
-  }, [])
+  }, [dispatch, isSuccess])
 
   useEffect(() => {
     dispatch(getCampgrounds())
@@ -22,7 +23,9 @@ const AllCampgrounds = () => {
     <>
       {campgrounds &&
         campgrounds.map((campground) => (
-          <h1 key={campground._id}>{campground.title}</h1>
+          <h1 key={campground._id}>
+            <Link to={campground._id}>{campground.title}</Link>
+          </h1>
         ))}
     </>
   )
