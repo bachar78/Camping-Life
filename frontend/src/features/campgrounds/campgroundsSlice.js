@@ -12,25 +12,24 @@ const initialState = {
   message: '',
 }
 
-// // Create a new Task
-// export const createTask = createAsyncThunk(
-//   'task/create',
-//   async (taskData, thunkAPI) => {
-//     try {
-//       const token = thunkAPI.getState().auth.member.token
-//       return await taskService.createTask(taskData, token)
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
+// Create a new Task
+export const createCampground = createAsyncThunk(
+  'campground/create',
+  async (campData, thunkAPI) => {
+    try {
+      return await campgroundsService.createCampground(campData)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
 
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 // // Update a Task
 // export const updateTask = createAsyncThunk(
 //   'task/update',
@@ -87,25 +86,24 @@ export const getCampgrounds = createAsyncThunk(
     }
   }
 )
-// // Delete a finished Task
-// export const deleteTask = createAsyncThunk(
-//   'task/delete',
-//   async (taskId, thunkAPI) => {
-//     try {
-//       const token = thunkAPI.getState().auth.member.token
-//       return await taskService.deleteTask(taskId, token)
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
+// Delete a finished Task
+export const deleteCampground = createAsyncThunk(
+  'campground/delete',
+  async (campId, thunkAPI) => {
+    try {
+      return await campgroundsService.deleteCampground(campId)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
 
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 
 export const campgroundsSlice = createSlice({
   name: 'campgrounds',
@@ -137,6 +135,34 @@ export const campgroundsSlice = createSlice({
         state.campground = action.payload
       })
       .addCase(getCampground.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(deleteCampground.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteCampground.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isDeleted = true
+        state.campgrounds.filter(
+          (campground) => action.payload._id !== campground._id
+        )
+      })
+      .addCase(deleteCampground.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(createCampground.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(createCampground.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.campgrounds.push(action.payload)
+      })
+      .addCase(createCampground.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

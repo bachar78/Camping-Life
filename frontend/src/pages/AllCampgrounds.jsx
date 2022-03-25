@@ -19,6 +19,9 @@ const AllCampgrounds = () => {
   useEffect(() => {
     dispatch(getCampgrounds())
   }, [dispatch])
+  if (isLoading) {
+    return <Spinner/>
+  }
   return (
     <>
       {campgrounds &&

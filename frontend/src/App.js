@@ -4,12 +4,14 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import AllCampgrounds from './pages/AllCampgrounds'
 import SingleCampground from './pages/SingleCampground'
+import GlobalStyle from './components/GlobalStyle'
 
 function App() {
   return (
     <>
       <Router>
         <div className='container'>
+          <GlobalStyle/>
           <Header />
           <Routes>
             <Route path='/' element={<HomePage />} />

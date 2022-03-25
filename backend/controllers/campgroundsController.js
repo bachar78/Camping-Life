@@ -26,4 +26,17 @@ const getCampground = asyncHandler(async (req, res) => {
   res.status(200).json(campground)
 })
 
-module.exports = { getAllCampgrounds, getCampground }
+const deleteCampground = asyncHandler(async (req, res) => {
+  const { id } = req.params
+
+  const campground = await Campground.findById(id)
+
+  if (!campground) {
+    res.status(404)
+    throw new Error('campground not found')
+  }
+  await campground.remove()
+
+  res.status(200).json(campground)
+})
+module.exports = { getAllCampgrounds, getCampground, deleteCampground }

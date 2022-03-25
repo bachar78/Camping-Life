@@ -11,6 +11,18 @@ const getCampground = async (campId) => {
   return data
 }
 
-const campgroundsService = { getCampground, getCampgrounds }
+//Delete a campground
+const deleteCampground = async (campId) => {
+  const { data } = await axios.delete(`${API_URL}/${campId}`)
+  return data
+}
+
+//Create Campground
+const createCampground = async (campData) => {
+  const { data } = await axios.post(API_URL, campData)
+  return data
+}
+
+const campgroundsService = { getCampground, getCampgrounds, deleteCampground, createCampground }
 
 export default campgroundsService
