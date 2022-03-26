@@ -1,11 +1,15 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { reset, getCampgrounds } from '../features/campgrounds/campgroundsSlice'
-import Spinner from '../components/Spinner'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+//framer motion
+import { motion } from 'framer-motion'
+import { pageAnimation } from '../animation'
+
+
 const AllCampgrounds = () => {
   const dispatch = useDispatch()
-  const { campgrounds, isError, isLoading, isSuccess } = useSelector(
+  const { campgrounds, isError, isSuccess } = useSelector(
     (state) => state.campgrounds
   )
   useEffect(() => {
@@ -19,18 +23,16 @@ const AllCampgrounds = () => {
   useEffect(() => {
     dispatch(getCampgrounds())
   }, [dispatch])
-  if (isLoading) {
-    return <Spinner/>
-  }
+
   return (
-    <>
+    <motion.div exit='exit' variants={pageAnimation} initial='hidden' animate='show'>
       {campgrounds &&
         campgrounds.map((campground) => (
           <h1 key={campground._id}>
             <Link to={campground._id}>{campground.title}</Link>
           </h1>
         ))}
-    </>
+    </motion.div>
   )
 }
 export default AllCampgrounds
