@@ -5,6 +5,7 @@ import Wave from '../components/Wave'
 //frame motion
 import { motion } from 'framer-motion'
 import { pageAnimation, titleAnim, fade, photoAnim } from '../animation'
+import OnScroll from '../components/OnScroll'
 
 const HomePage = () => {
   return (
@@ -14,6 +15,7 @@ const HomePage = () => {
       initial='hidden'
       animate='show'>
       <Home>
+        <OnScroll/>
         <Description>
           <motion.div>
             <Hide>
@@ -47,7 +49,6 @@ const HomePage = () => {
         </Image>
         <Wave />
       </Home>
-      
     </motion.div>
   )
 }
