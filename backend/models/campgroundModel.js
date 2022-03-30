@@ -8,7 +8,7 @@ const CampgroundSchema = new Schema(
       type: String,
       required: true,
     },
-    location: {
+    address: {
       type: String,
       required: true,
     },
@@ -38,7 +38,7 @@ const CampgroundSchema = new Schema(
       type: String,
       required: true,
     },
-    Zip_code: {
+    zip_code: {
       type: String,
       required: true,
     },

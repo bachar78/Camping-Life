@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { motion } from 'framer-motion'
 import {
   createCampground,
   reset,
 } from '../../features/campgrounds/campgroundsSlice'
+import Spinner from '../../components/Spinner'
 
 const AddCampground = () => {
   const [postData, setPostData] = useState({
@@ -17,25 +18,32 @@ const AddCampground = () => {
     location: '',
     zip_code: '',
   })
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isSuccess, isError } = useSelector((state) => state.campgrounds)
+  const { isSuccess, isError, isLoading, message } = useSelector(
+    (state) => state.campgrounds
+  )
   useEffect(() => {
     if (isError) {
-      toast.error('Something went wrong')
+      toast.error(message)
     }
     if (isSuccess) {
       navigate('/campgrounds')
       dispatch(reset())
       toast.success('Campground was successfully created')
     }
-  }, [isError, isSuccess])
+  }, [isError, isSuccess, message, dispatch, navigate])
   const onChange = (e) => {
     setPostData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
   const onSubmit = (e) => {
     e.preventDefault()
+    dispatch(reset())
+    if (!images) {
+      toast.error('You should upload images')
+      return
+    }
     const data = new FormData()
     for (const key in postData) {
       data.append(key, postData[key])
@@ -56,6 +64,9 @@ const AddCampground = () => {
   //     }
   //   })
   // }
+  if (isLoading) {
+    return <Spinner />
+  }
   return (
     <Container>
       <h1>Create a Campground</h1>
@@ -66,14 +77,6 @@ const AddCampground = () => {
           placeholder='enter the title'
           onChange={onChange}
           value={postData.title}
-          required
-        />
-        <input
-          type='text'
-          name='location'
-          placeholder='enter location'
-          onChange={onChange}
-          value={postData.location}
           required
         />
         <input

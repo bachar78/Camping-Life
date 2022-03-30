@@ -18,17 +18,17 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)]
 
 const seedDb = async () => {
   await Campground.deleteMany({})
-  for (let i = 0; i < 74; i++) {
+  for (let i = 0; i < 25; i++) {
     await Campground.create({
       title: `${sample(descriptors)} ${sample(places)}`,
-      location: data[i].State + '-' + data[i].City,
+      address: data[i].Street + '-' + data[i].State + '-' + data[i].City,
       price: Math.floor(Math.random() * 150),
       description:
         'Camping is an outdoor activity that involves staying the night/more than one night in a protective shelter out in nature.',
       state: data[i].State,
       latitude: data[i].Latitude,
       longitude: data[i].Longitude,
-      Zip_code: data[i].Zip_code,
+      zip_code: data[i].Zip_code,
       forSell: false,
       images: [
         {

@@ -9,6 +9,8 @@ import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 import ContactUs from './pages/ContactUs'
 import AddCampground from './pages/FormComponents/AddCampground'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 //Animation
 import { AnimatePresence } from 'framer-motion'
 
@@ -28,6 +30,7 @@ function App() {
         </Routes>
       </AnimatePresence>
       <Footer />
+      <ToastContainer />
     </Container>
   )
 }

@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Campground = require('../models/campgroundModel')
 const axios = require('axios')
+const data = require('../config/data')
 //@des Get all Campgrounds for the homepage
 //@route /api/campgrounds
 //@access Public
@@ -47,18 +48,49 @@ const deleteCampground = asyncHandler(async (req, res) => {
 //@route POST /api/campgrounds
 //@access Private
 const createCampground = asyncHandler(async (req, res) => {
-  const { title, price, description, zip_code, images } = req.body
-  const {data} = await axios.get(
+  const { title, price, description, zip_code } = req.body
+  const { data } = await axios.get(
     `https://api.geoapify.com/v1/geocode/search?postcode=${zip_code}&format=json&apiKey=0295f24387ed41c99bc8805b138ace7c`
   )
-  const newCampground = Campground.create({
+  if (data.results.length === 0) {
+    res.json(400)
+    throw new Error('Please fill all the fields')
+  }
+  if (!title || !price || !description || !zip_code) {
+    res.status(400)
+    throw new Error('Please fill all the fields')
+  }
+  if (req.files.length === 0) {
+    res.status(400)
+    throw new Error('You should upload at least one image')
+  }
+  const newCampground = await Campground.create({
     title,
     price,
     description,
+    address:
+      data.results[0].suburb +
+      '-' +
+      data.results[0].address_line1 +
+      '-' +
+      data.results[0].address_line2,
+    latitude: data.results[0].lat,
+    longitude: data.results[0].lon,
+    state: data.results[0].state,
     zip_code,
+    images:
+      req.files.length > 0
+        ? req.files.map((photo) => ({
+            url: photo.path,
+            filename: photo.filename,
+          }))
+        : {},
   })
-
-  res.json(data.features[0])
+  if (!newCampground) {
+    res.status(401)
+    throw new Error('Invalid Credential')
+  }
+  res.status(200).json(newCampground)
 })
 module.exports = {
   getAllCampgrounds,

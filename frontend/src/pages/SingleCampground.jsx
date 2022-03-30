@@ -15,16 +15,12 @@ const SingleCampground = () => {
   const { campground, isError, isLoading, isDeleted, isSuccess } = useSelector(
     (state) => state.campgrounds
   )
-  useEffect(() => {
-    return () => {
-      if (isSuccess) {
-        dispatch(reset())
-      }
-    }
-  }, [dispatch, isSuccess, isDeleted])
 
   useEffect(() => {
     dispatch(getCampground(id))
+    return () => {
+      dispatch(reset())
+    }
   }, [dispatch])
   const onDelete = () => {
     dispatch(deleteCampground(id))
@@ -32,6 +28,7 @@ const SingleCampground = () => {
     navigate('/campgrounds')
   }
   const onCreate = () => {
+    dispatch(reset())
     navigate('/new')
   }
 
@@ -45,7 +42,7 @@ const SingleCampground = () => {
           <h1>{campground.zip_code}</h1>
           <h1>{campground.createdAt}</h1>
           <img
-            src={campground.images && campground.images[1].url}
+            src={campground.images ? campground.images[1].url : ''}
             style={{ width: '30%' }}
             alt=''
           />

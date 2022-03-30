@@ -14,11 +14,14 @@ function CampgroundList({ campground }) {
       <Link to={`/campgrounds/${campground._id}`}>
         <CampgroundStyled>
           <Image>
-            <img src={campground.images[0].url} alt='campground' />
+            <img
+              src={campground.images[0] ? campground.images[0].url : ''}
+              alt='campground'
+            />
           </Image>
           <Description>
             <h3>{campground.title}</h3>
-            <h5>{campground.location}</h5>
+            <h5>{campground.address}</h5>
             <h5>Price: ${campground.price}</h5>
           </Description>
         </CampgroundStyled>
@@ -28,8 +31,8 @@ function CampgroundList({ campground }) {
 }
 
 const CampgroundStyled = styled(motion.div)`
-min-height: 30vh;
-overflow: hidden;
+  min-height: 30vh;
+  overflow: hidden;
   border-radius: 1rem;
   border: 1px solid white;
   cursor: pointer;
@@ -54,11 +57,11 @@ const Image = styled.div`
   img {
     width: 100%;
     object-fit: cover;
-    transform: scale(1.5)
+    transform: scale(1.5);
   }
 `
 const Description = styled(motion.div)`
-width: 50%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;

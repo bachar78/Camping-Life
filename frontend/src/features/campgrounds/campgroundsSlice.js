@@ -159,7 +159,7 @@ export const campgroundsSlice = createSlice({
       .addCase(createCampground.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        // state.campgrounds.push(action.payload)
+        state.campgrounds.unshift(action.payload)
       })
       .addCase(createCampground.rejected, (state, action) => {
         state.isLoading = false
