@@ -5,7 +5,7 @@ import {
   getCampground,
   deleteCampground,
 } from '../features/campgrounds/campgroundsSlice'
-import Spinner from '../components/Spinner'
+
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const SingleCampground = () => {
@@ -31,8 +31,8 @@ const SingleCampground = () => {
     dispatch(reset())
     navigate('/campgrounds')
   }
-  if (isLoading) {
-    return <Spinner />
+  const onCreate = () => {
+    navigate('/new')
   }
 
   return (
@@ -50,6 +50,7 @@ const SingleCampground = () => {
             alt=''
           />
           <button onClick={onDelete}>Delete Campground</button>
+          <button onClick={onCreate}>Add Campground</button>
         </>
       )}
     </div>

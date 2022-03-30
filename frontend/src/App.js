@@ -8,6 +8,7 @@ import GlobalStyle from './components/GlobalStyle'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 import ContactUs from './pages/ContactUs'
+import AddCampground from './pages/FormComponents/AddCampground'
 //Animation
 import { AnimatePresence } from 'framer-motion'
 
@@ -21,6 +22,7 @@ function App() {
         <Routes location={location} key={location.pathname}>
           <Route path='/' element={<HomePage />} />
           <Route path='/campgrounds' element={<AllCampgrounds />} />
+          <Route path='/new' element={<AddCampground />} />
           <Route path='/campgrounds/:id' element={<SingleCampground />} />
           <Route path='/contacts' element={<ContactUs />} />
         </Routes>
