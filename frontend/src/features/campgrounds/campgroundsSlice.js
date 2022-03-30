@@ -12,12 +12,12 @@ const initialState = {
   message: '',
 }
 
-// Create a new Task
+// Create a new Campground
 export const createCampground = createAsyncThunk(
   'campground/create',
-  async (campData, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      return await campgroundsService.createCampground(campData)
+      return await campgroundsService.createCampground(data)
     } catch (error) {
       const message =
         (error.response &&
@@ -25,7 +25,6 @@ export const createCampground = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString()
-
       return thunkAPI.rejectWithValue(message)
     }
   }
@@ -86,7 +85,7 @@ export const getCampgrounds = createAsyncThunk(
     }
   }
 )
-// Delete a finished Task
+// Delete a Campground
 export const deleteCampground = createAsyncThunk(
   'campground/delete',
   async (campId, thunkAPI) => {
@@ -160,7 +159,7 @@ export const campgroundsSlice = createSlice({
       .addCase(createCampground.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.campgrounds.push(action.payload)
+        // state.campgrounds.push(action.payload)
       })
       .addCase(createCampground.rejected, (state, action) => {
         state.isLoading = false

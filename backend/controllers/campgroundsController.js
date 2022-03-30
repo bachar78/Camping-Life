@@ -48,7 +48,7 @@ const deleteCampground = asyncHandler(async (req, res) => {
 //@access Private
 const createCampground = asyncHandler(async (req, res) => {
   const { title, price, description, zip_code, images } = req.body
-  const {} = await axios.get(
+  const {data} = await axios.get(
     `https://api.geoapify.com/v1/geocode/search?postcode=${zip_code}&format=json&apiKey=0295f24387ed41c99bc8805b138ace7c`
   )
   const newCampground = Campground.create({

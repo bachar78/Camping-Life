@@ -18,9 +18,9 @@ const deleteCampground = async (campId) => {
 }
 
 //Create Campground
-const createCampground = async (campData) => {
-  const { data } = await axios.post(API_URL, campData)
-  return data
+const createCampground = async (data) => {
+  const response = await axios.post(API_URL, data)
+  return response.data
 }
 
 const campgroundsService = { getCampground, getCampgrounds, deleteCampground, createCampground }
