@@ -6,7 +6,6 @@ import { pageAnimation, fade } from '../animation'
 import { motion } from 'framer-motion'
 import Spinner from '../components/Spinner'
 import {
-  reset,
   getCampground,
   deleteCampground,
 } from '../features/campgrounds/campgroundsSlice'
@@ -15,18 +14,18 @@ const SingleCampground = () => {
   const navigate = useNavigate()
   const { id } = useParams()
   const dispatch = useDispatch()
-  const { campground, isError, isLoading, isDeleted, isSuccess } = useSelector(
+  const { campground, isError, isLoading, message } = useSelector(
     (state) => state.campgrounds
   )
   useEffect(() => {
     if (isError) {
-      toast.error('Something went wrong')
+      toast.error(message)
     }
-  }, [isError])
+  }, [isError, message])
 
   useEffect(() => {
     dispatch(getCampground(id))
-  }, [id])
+  }, [id, dispatch])
   const onDelete = () => {
     dispatch(deleteCampground(id))
     // dispatch(reset())

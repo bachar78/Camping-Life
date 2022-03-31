@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { reset, getCampgrounds } from '../features/campgrounds/campgroundsSlice'
 import { Link } from 'react-router-dom'
 import MapCluster from '../components/Maps/MapCluster'
-import { fade, LineAnim } from '../animation'
+import { fade } from '../animation'
 import styled from 'styled-components'
 import CampgroundList from './components/CampgroundList'
-import OnScroll from '../components/OnScroll'
+
 //framer motion
 import { motion } from 'framer-motion'
 import { pageAnimation } from '../animation'
+import { toast } from 'react-toastify'
 
 const AllCampgrounds = () => {
   const dispatch = useDispatch()
@@ -17,17 +18,20 @@ const AllCampgrounds = () => {
     (state) => state.campgrounds
   )
   useEffect(() => {
+    if (isError) {
+      toast.error('Cant find the campgrounds')
+    }
     return () => {
       if (isSuccess) {
         dispatch(reset())
       }
     }
-  }, [dispatch, isSuccess])
+  }, [dispatch, isSuccess, isError])
 
   useEffect(() => {
     dispatch(getCampgrounds())
   }, [dispatch])
-  
+
   return (
     <Container
       exit='exit'
@@ -40,9 +44,7 @@ const AllCampgrounds = () => {
         </Map>
       </motion.div>
       <Link to='/new'>
-        <motion.button variants={fade}>
-          Add Campground
-        </motion.button>
+        <motion.button variants={fade}>Add Campground</motion.button>
       </Link>
       <ContainerCampground variants={fade}>
         {campgrounds &&

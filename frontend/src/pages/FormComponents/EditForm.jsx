@@ -15,7 +15,7 @@ const EditForm = () => {
   const { id } = useParams()
   const { state } = useLocation()
 
-  const { isUpdated, isError, isLoading, message, campground } = useSelector(
+  const { isUpdated, isError, isLoading, message } = useSelector(
     (state) => state.campgrounds
   )
   const [postData, setPostData] = useState({
@@ -39,13 +39,17 @@ const EditForm = () => {
     return () => {
       dispatch(reset())
     }
-  }, [isError, isUpdated, message, navigate, id])
+  }, [isError, isUpdated, message, navigate, id, dispatch])
 
   const onChange = (e) => {
     setPostData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
   const onSubmit = (e) => {
     e.preventDefault()
+    if (state.images.length + images.length > 6) {
+      toast.error(`You can only upload ${6 - state.images.length} images`)
+      return
+    }
     const dataForm = new FormData()
     for (const key in postData) {
       dataForm.append(key, postData[key])

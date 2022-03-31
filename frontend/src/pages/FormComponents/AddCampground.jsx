@@ -5,10 +5,7 @@ import styled from 'styled-components'
 import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
 import { pageAnimation, fade } from '../../animation'
-import {
-  createCampground,
-  reset,
-} from '../../features/campgrounds/campgroundsSlice'
+import { createCampground } from '../../features/campgrounds/campgroundsSlice'
 import Spinner from '../../components/Spinner'
 
 const AddCampground = () => {
@@ -32,7 +29,6 @@ const AddCampground = () => {
     if (isCreated) {
       navigate(`/campgrounds/${campground._id}`)
     }
-    
   }, [isError, isCreated, message, navigate, campground._id])
   const onChange = (e) => {
     setPostData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -41,6 +37,10 @@ const AddCampground = () => {
     e.preventDefault()
     if (!images) {
       toast.error('You should upload images')
+      return
+    }
+    if (images.length > 5) {
+      toast.error('You can only upload till 6 images')
       return
     }
     const data = new FormData()
@@ -75,7 +75,8 @@ const AddCampground = () => {
       animate='show'>
       <motion.h1 variants={fade}>Create a Campground</motion.h1>
       <Form variants={fade} onSubmit={onSubmit}>
-        <motion.input variants={fade} 
+        <motion.input
+          variants={fade}
           type='text'
           name='title'
           placeholder='enter the title'
@@ -83,7 +84,8 @@ const AddCampground = () => {
           value={postData.title}
           required
         />
-        <motion.input variants={fade}
+        <motion.input
+          variants={fade}
           type='text'
           name='price'
           placeholder='0.00'
@@ -91,13 +93,15 @@ const AddCampground = () => {
           value={postData.price}
           required
         />
-        <motion.textarea variants={fade}
+        <motion.textarea
+          variants={fade}
           type='text'
           name='description'
           onChange={onChange}
           value={postData.description}
           required></motion.textarea>
-        <motion.input variants={fade}
+        <motion.input
+          variants={fade}
           type='file'
           name='image'
           onChange={(e) => {
@@ -105,7 +109,8 @@ const AddCampground = () => {
           }}
           multiple
         />
-        <motion.input variants={fade} 
+        <motion.input
+          variants={fade}
           type='text'
           name='zip_code'
           placeholder='enter zip_code'
@@ -113,7 +118,9 @@ const AddCampground = () => {
           value={postData.zip_code}
           required
         />
-        <motion.button variants={fade} type='submit'>Add Camping</motion.button>
+        <motion.button variants={fade} type='submit'>
+          Add Camping
+        </motion.button>
       </Form>
     </Container>
   )
