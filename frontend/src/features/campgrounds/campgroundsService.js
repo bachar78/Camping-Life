@@ -23,6 +23,18 @@ const createCampground = async (data) => {
   return response.data
 }
 
-const campgroundsService = { getCampground, getCampgrounds, deleteCampground, createCampground }
+//Update Campground
+const updateCampground = async (data) => {
+  const response = await axios.put(`${API_URL}/${data.campId}`, data.campData)
+  console.log(response.data)
+  return response.data
+}
+const campgroundsService = {
+  getCampground,
+  getCampgrounds,
+  deleteCampground,
+  createCampground,
+  updateCampground,
+}
 
 export default campgroundsService

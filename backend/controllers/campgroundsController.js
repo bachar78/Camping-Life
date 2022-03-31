@@ -54,7 +54,7 @@ const createCampground = asyncHandler(async (req, res) => {
   )
   if (data.results.length === 0) {
     res.json(400)
-    throw new Error('Please fill all the fields')
+    throw new Error('Invalid Postcode')
   }
   if (!title || !price || !description || !zip_code) {
     res.status(400)
@@ -92,9 +92,61 @@ const createCampground = asyncHandler(async (req, res) => {
   }
   res.status(200).json(newCampground)
 })
+
+//@des update Campground
+//@route PUT /api/campgrounds
+//@access Private
+const updateCampground = asyncHandler(async (req, res) => {
+  const { id } = req.params
+
+  const campground = await Campground.findById(id)
+  if (!campground) {
+    res.status(401)
+    throw new Error('Campground not found')
+  }
+  if (req.body.zip_code !== campground.zip_code) {
+    const { data } = await axios.get(
+      `https://api.geoapify.com/v1/geocode/search?postcode=${req.body.zip_code}&format=json&apiKey=0295f24387ed41c99bc8805b138ace7c`
+    )
+    ;(campground.address =
+      data.results[0].suburb +
+      '-' +
+      data.results[0].address_line1 +
+      '-' +
+      data.results[0].address_line2),
+      (campground.latitude = data.results[0].lat),
+      (campground.longitude = data.results[0].lon),
+      (campground.state = data.results[0].state),
+      (campground.zip_code = req.body.zip_code),
+      await campground.save()
+  }
+  if (req.body.title !== campground.title) {
+    campground.title = req.body.title
+    await campground.save()
+  }
+  if (req.body.description !== campground.description) {
+    campground.description = req.body.description
+    await campground.save()
+  }
+  if (req.body.price !== campground.price) {
+    campground.price = req.body.price
+    await campground.save()
+  }
+  if (req.files.length !== 0) {
+    const imgs = req.files.map((photo) => ({
+      url: photo.path,
+      filename: photo.filename,
+    }))
+    campground.images.push(...imgs)
+    await campground.save()
+  }
+  await campground.save()
+  res.status(200).json(campground)
+})
 module.exports = {
   getAllCampgrounds,
   getCampground,
   deleteCampground,
   createCampground,
+  updateCampground,
 }

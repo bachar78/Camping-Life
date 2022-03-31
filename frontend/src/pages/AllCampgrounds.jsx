@@ -27,21 +27,23 @@ const AllCampgrounds = () => {
   useEffect(() => {
     dispatch(getCampgrounds())
   }, [dispatch])
-
+  
   return (
     <Container
       exit='exit'
       variants={pageAnimation}
       initial='hidden'
       animate='show'>
-      <OnScroll/>
       <motion.div variants={fade}>
-        <motion.div className='line'></motion.div>
         <Map>
           <MapCluster data={campgrounds} />
         </Map>
-        <motion.div className='line'></motion.div>
       </motion.div>
+      <Link to='/new'>
+        <motion.button variants={fade}>
+          Add Campground
+        </motion.button>
+      </Link>
       <ContainerCampground variants={fade}>
         {campgrounds &&
           campgrounds.map((campground) => (
@@ -81,5 +83,6 @@ const Map = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
 `
 export default AllCampgrounds

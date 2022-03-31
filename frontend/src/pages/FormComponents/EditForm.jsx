@@ -1,69 +1,62 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams, useLocation, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
 import { pageAnimation, fade } from '../../animation'
 import {
-  createCampground,
   reset,
+  updateCampground,
 } from '../../features/campgrounds/campgroundsSlice'
 import Spinner from '../../components/Spinner'
 
-const AddCampground = () => {
+const EditForm = () => {
+  const { id } = useParams()
+  const { state } = useLocation()
+
+  const { isUpdated, isError, isLoading, message, campground } = useSelector(
+    (state) => state.campgrounds
+  )
   const [postData, setPostData] = useState({
-    title: '',
-    price: '',
-    description: '',
-    location: '',
-    zip_code: '',
+    title: state ? state.title : '',
+    price: state ? state.price : '',
+    description: state ? state.description : '',
+    location: state ? state.location : '',
+    zip_code: state ? state.zip_code : '',
   })
+
   const [images, setImages] = useState(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { isCreated, isError, isLoading, message, campground } = useSelector(
-    (state) => state.campgrounds
-  )
   useEffect(() => {
     if (isError) {
       toast.error(message)
     }
-    if (isCreated) {
-      navigate(`/campgrounds/${campground._id}`)
+    if (isUpdated) {
+      navigate(`/campgrounds/${id}`)
     }
-    
-  }, [isError, isCreated, message, navigate, campground._id])
+    return () => {
+      dispatch(reset())
+    }
+  }, [isError, isUpdated, message, navigate, id])
+
   const onChange = (e) => {
     setPostData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
   const onSubmit = (e) => {
     e.preventDefault()
-    if (!images) {
-      toast.error('You should upload images')
-      return
-    }
-    const data = new FormData()
+    const dataForm = new FormData()
     for (const key in postData) {
-      data.append(key, postData[key])
+      dataForm.append(key, postData[key])
     }
     for (const key in images) {
-      data.append('image', images[key])
+      dataForm.append('image', images[key])
     }
-    dispatch(createCampground(data))
+    const data = { campId: id, campData: dataForm }
+    dispatch(updateCampground(data))
     toast.success('Campground was successfully created')
   }
-  // // if we want to upload images using the browser not "multer" we put this function in onChange field of image input
-  // const uploadFiles = (e) => {
-  //   Array.from(e.target.files).forEach((image) => {
-  //     const file = image
-  //     const reader = new FileReader()
-  //     reader.readAsDataURL(file)
-  //     reader.onloadend = () => {
-  //       setImages((prev) => [...prev, reader.result])
-  //     }
-  //   })
-  // }
   if (isLoading) {
     return <Spinner />
   }
@@ -73,9 +66,10 @@ const AddCampground = () => {
       variants={pageAnimation}
       initial='hidden'
       animate='show'>
-      <motion.h1 variants={fade}>Create a Campground</motion.h1>
+      <motion.h1 variants={fade}>Edit Campground</motion.h1>
       <Form variants={fade} onSubmit={onSubmit}>
-        <motion.input variants={fade} 
+        <motion.input
+          variants={fade}
           type='text'
           name='title'
           placeholder='enter the title'
@@ -83,7 +77,8 @@ const AddCampground = () => {
           value={postData.title}
           required
         />
-        <motion.input variants={fade}
+        <motion.input
+          variants={fade}
           type='text'
           name='price'
           placeholder='0.00'
@@ -91,13 +86,15 @@ const AddCampground = () => {
           value={postData.price}
           required
         />
-        <motion.textarea variants={fade}
+        <motion.textarea
+          variants={fade}
           type='text'
           name='description'
           onChange={onChange}
           value={postData.description}
           required></motion.textarea>
-        <motion.input variants={fade}
+        <motion.input
+          variants={fade}
           type='file'
           name='image'
           onChange={(e) => {
@@ -105,7 +102,8 @@ const AddCampground = () => {
           }}
           multiple
         />
-        <motion.input variants={fade} 
+        <motion.input
+          variants={fade}
           type='text'
           name='zip_code'
           placeholder='enter zip_code'
@@ -113,7 +111,13 @@ const AddCampground = () => {
           value={postData.zip_code}
           required
         />
-        <motion.button variants={fade} type='submit'>Add Camping</motion.button>
+        <motion.button variants={fade} type='submit'>
+          {' '}
+          Edit Camping
+        </motion.button>
+        <Link to={-1}>
+          <motion.button variants={fade}>Cancel Editing</motion.button>
+        </Link>
       </Form>
     </Container>
   )
@@ -145,4 +149,5 @@ const Form = styled.form`
     width: 100%;
   }
 `
-export default AddCampground
+
+export default EditForm

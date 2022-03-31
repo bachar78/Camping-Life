@@ -1,12 +1,15 @@
 import { useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { pageAnimation, fade } from '../animation'
+import { motion } from 'framer-motion'
+import Spinner from '../components/Spinner'
 import {
   reset,
   getCampground,
   deleteCampground,
 } from '../features/campgrounds/campgroundsSlice'
-
-import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const SingleCampground = () => {
   const navigate = useNavigate()
@@ -15,42 +18,60 @@ const SingleCampground = () => {
   const { campground, isError, isLoading, isDeleted, isSuccess } = useSelector(
     (state) => state.campgrounds
   )
+  useEffect(() => {
+    if (isError) {
+      toast.error('Something went wrong')
+    }
+  }, [isError])
 
   useEffect(() => {
     dispatch(getCampground(id))
-    return () => {
-      dispatch(reset())
-    }
-  }, [dispatch])
+  }, [id])
   const onDelete = () => {
     dispatch(deleteCampground(id))
-    dispatch(reset())
+    // dispatch(reset())
+    toast.success('Campground deleted')
     navigate('/campgrounds')
   }
-  const onCreate = () => {
-    dispatch(reset())
-    navigate('/new')
+  if (isLoading) {
+    return <Spinner />
   }
-
   return (
-    <div>
+    <motion.div
+      exit='exit'
+      variants={pageAnimation}
+      initial='hidden'
+      animate='show'>
       {campground && (
         <>
-          <h1>{campground.title}</h1>
-          <h1>{campground.state}</h1>
-          <h1>{campground.location}</h1>
-          <h1>{campground.zip_code}</h1>
-          <h1>{campground.createdAt}</h1>
-          <img
+          <motion.h1 variants={fade}>{campground.title}</motion.h1>
+          <motion.h1 variants={fade}>{campground.state}</motion.h1>
+          <motion.h1 variants={fade}>{campground.location}</motion.h1>
+          <motion.h1 variants={fade}>{campground.zip_code}</motion.h1>
+          <motion.h1 variants={fade}>{campground.createdAt}</motion.h1>
+          <motion.img
+            variants={fade}
             src={campground.images ? campground.images[1].url : ''}
             style={{ width: '30%' }}
             alt=''
           />
-          <button onClick={onDelete}>Delete Campground</button>
-          <button onClick={onCreate}>Add Campground</button>
+          <motion.button variants={fade} onClick={onDelete}>
+            Delete Campground
+          </motion.button>
+          <Link to='/campgrounds'>
+            <motion.button variants={fade}>Back to Campgrounds</motion.button>
+          </Link>
+          <motion.button
+            onClick={() =>
+              navigate(`/campgrounds/${campground._id}/edit`, {
+                state: campground ,
+              })
+            } variants={fade}>
+            Edit Campgrounds
+          </motion.button>
         </>
       )}
-    </div>
+    </motion.div>
   )
 }
 

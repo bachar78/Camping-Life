@@ -9,6 +9,7 @@ const initialState = {
   isLoading: false,
   isUpdated: false,
   isDeleted: false,
+  isCreated: false,
   message: '',
 }
 
@@ -29,25 +30,24 @@ export const createCampground = createAsyncThunk(
     }
   }
 )
-// // Update a Task
-// export const updateTask = createAsyncThunk(
-//   'task/update',
-//   async (data, thunkAPI) => {
-//     try {
-//       const token = thunkAPI.getState().auth.member.token
-//       return await taskService.updateTask(data, token)
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
+// Update a campground
+export const updateCampground = createAsyncThunk(
+  'campground/update',
+  async (data, thunkAPI) => {
+    try {
+      return await campgroundsService.updateCampground(data)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
 
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 
 //View a single Campground
 export const getCampground = createAsyncThunk(
@@ -158,10 +158,27 @@ export const campgroundsSlice = createSlice({
       })
       .addCase(createCampground.fulfilled, (state, action) => {
         state.isLoading = false
-        state.isSuccess = true
+        state.isCreated = true
+        state.campground = action.payload
         state.campgrounds.unshift(action.payload)
       })
       .addCase(createCampground.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateCampground.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateCampground.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isUpdated = true
+        state.campground = action.payload
+        state.campgrounds.map((campground) =>
+          action.payload._id === campground._id ? action.payload : campground
+        )
+      })
+      .addCase(updateCampground.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
