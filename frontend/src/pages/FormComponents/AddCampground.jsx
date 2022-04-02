@@ -48,7 +48,7 @@ const AddCampground = () => {
       toast.error('You should upload images')
       return
     }
-    if (images.length > 5) {
+    if (images.length > 6) {
       toast.error('You can only upload till 6 images')
       return
     }
