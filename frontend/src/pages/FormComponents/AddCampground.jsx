@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
 import { pageAnimation, fade } from '../../animation'
-import { createCampground } from '../../features/campgrounds/campgroundsSlice'
+import {
+  createCampground,
+  reset,
+} from '../../features/campgrounds/campgroundsSlice'
 import Spinner from '../../components/Spinner'
 
 const AddCampground = () => {
@@ -22,14 +25,20 @@ const AddCampground = () => {
   const { isCreated, isError, isLoading, message, campground } = useSelector(
     (state) => state.campgrounds
   )
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(reset())
+  //   }
+  // })
   useEffect(() => {
     if (isError) {
       toast.error(message)
+      dispatch(reset())
     }
     if (isCreated) {
       navigate(`/campgrounds/${campground._id}`)
     }
-  }, [isError, isCreated, message, navigate, campground._id])
+  }, [isError, isCreated, message, navigate, campground._id, dispatch])
   const onChange = (e) => {
     setPostData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
@@ -51,7 +60,6 @@ const AddCampground = () => {
       data.append('image', images[key])
     }
     dispatch(createCampground(data))
-    toast.success('Campground was successfully created')
   }
   // // if we want to upload images using the browser not "multer" we put this function in onChange field of image input
   // const uploadFiles = (e) => {
@@ -121,6 +129,9 @@ const AddCampground = () => {
         <motion.button variants={fade} type='submit'>
           Add Camping
         </motion.button>
+        <Link to={-1}>
+          <motion.button variants={fade}>Cancel</motion.button>
+        </Link>
       </Form>
     </Container>
   )
@@ -136,7 +147,7 @@ const Container = styled(motion.div)`
   }
 `
 const Form = styled.form`
-  width: 40%;
+  width: 60%;
   margin: 2rem auto;
   display: flex;
   flex-direction: column;

@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Campground = require('../models/campgroundModel')
 const axios = require('axios')
-const data = require('../config/data')
+const { cloudinary } = require('../utils/cloudinary.js')
 //@des Get all Campgrounds for the homepage
 //@route /api/campgrounds
 //@access Public
@@ -39,8 +39,13 @@ const deleteCampground = asyncHandler(async (req, res) => {
     res.status(404)
     throw new Error('campground not found')
   }
-  await campground.remove()
 
+  await campground.remove()
+  for (let image of campground.images) {
+    await cloudinary.uploader.destroy(image.filename, (result) =>
+      console.log(result)
+    )
+  }
   res.status(200).json(campground)
 })
 
@@ -53,7 +58,7 @@ const createCampground = asyncHandler(async (req, res) => {
     `https://api.geoapify.com/v1/geocode/search?postcode=${zip_code}&format=json&apiKey=0295f24387ed41c99bc8805b138ace7c`
   )
   if (data.results.length === 0) {
-    res.json(400)
+    res.status(400)
     throw new Error('Invalid Postcode')
   }
   if (!title || !price || !description || !zip_code) {
@@ -138,6 +143,15 @@ const updateCampground = asyncHandler(async (req, res) => {
       filename: photo.filename,
     }))
     campground.images.push(...imgs)
+    await campground.save()
+  }
+  if (req.body.deletedImage && req.body.deletedImage.length !== 0) {
+    for (let image of req.body.deletedImage) {
+      await cloudinary.uploader.destroy(image, (result) => console.log(result))
+    }
+    await campground.updateOne({
+      $pull: { images: { filename: { $in: req.body.deletedImage } } },
+    })
     await campground.save()
   }
   await campground.save()

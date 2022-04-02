@@ -12,10 +12,10 @@
 }
 
 .loadingSpinner {
-  width: 64px;
-  height: 64px;
-  border: 8px solid;
-  border-color: #000 transparent #555 transparent;
+  width: 164px;
+  height: 164px;
+  border: 18px solid;
+  border-color: #6de2b7 transparent #16d791 transparent;
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }

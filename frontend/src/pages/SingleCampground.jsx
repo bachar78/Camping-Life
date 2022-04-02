@@ -50,7 +50,7 @@ const SingleCampground = () => {
           <motion.h1 variants={fade}>{campground.createdAt}</motion.h1>
           <motion.img
             variants={fade}
-            src={campground.images ? campground.images[1].url : ''}
+            src={campground.images ? campground.images[0].url : ''}
             style={{ width: '30%' }}
             alt=''
           />
