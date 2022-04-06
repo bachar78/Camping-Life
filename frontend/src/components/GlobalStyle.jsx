@@ -36,6 +36,7 @@ button {
         background-color: #23d997;
         color: white;
     }
+    display: block;
 }
 h2 {
     font-weight: lighter;

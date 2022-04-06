@@ -40,7 +40,7 @@ const EditForm = () => {
     return () => {
       dispatch(reset())
     }
-  }, [isError, isUpdated, message, id, dispatch])
+  }, [isError, isUpdated, message, id, dispatch, navigate])
 
   const onChange = (e) => {
     setPostData((prev) => ({ ...prev, [e.target.name]: e.target.value }))

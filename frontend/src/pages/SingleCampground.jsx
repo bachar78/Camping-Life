@@ -5,10 +5,12 @@ import { toast } from 'react-toastify'
 import { pageAnimation, fade } from '../animation'
 import { motion } from 'framer-motion'
 import Spinner from '../components/Spinner'
+import FormReview from '../components/reviews/FormReview'
 import {
   getCampground,
   deleteCampground,
 } from '../features/campgrounds/campgroundsSlice'
+import MapCampground from '../components/Maps/MapCampground'
 
 const SingleCampground = () => {
   const navigate = useNavigate()
@@ -43,6 +45,7 @@ const SingleCampground = () => {
       animate='show'>
       {campground && (
         <>
+          <MapCampground campground={campground}/>
           <motion.h1 variants={fade}>{campground.title}</motion.h1>
           <motion.h1 variants={fade}>{campground.state}</motion.h1>
           <motion.h1 variants={fade}>{campground.location}</motion.h1>
@@ -68,6 +71,7 @@ const SingleCampground = () => {
             } variants={fade}>
             Edit Campgrounds
           </motion.button>
+          <FormReview/>
         </>
       )}
     </motion.div>
