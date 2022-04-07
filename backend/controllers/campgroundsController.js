@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const Campground = require('../models/campgroundModel')
 const axios = require('axios')
 const { cloudinary } = require('../utils/cloudinary.js')
+
 //@des Get all Campgrounds for the homepage
 //@route /api/campgrounds
 //@access Public
@@ -15,11 +16,11 @@ const getAllCampgrounds = asyncHandler(async (req, res) => {
 })
 
 //@des Get a single Campground from the homepage
-//@route /api/campgrounds/:id
+//@route GET /api/campgrounds/:id
 //@access Public
 const getCampground = asyncHandler(async (req, res) => {
   const { id } = req.params
-  const campground = await Campground.findById(id)
+  const campground = await Campground.findById(id).populate('reviews')
   if (!campground) {
     res.status(404)
     throw new Error('campground not found')

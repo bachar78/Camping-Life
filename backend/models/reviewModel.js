@@ -2,13 +2,17 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const reviewSchema = new Schema({
-  body: {
+  review: {
     type: String,
     required: true,
   },
   rating: {
     type: Number,
-    required: true,
+    default: 3,
+  },
+  campground_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Campground',
   },
 })
 

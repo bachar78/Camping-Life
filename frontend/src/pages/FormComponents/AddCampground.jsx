@@ -25,11 +25,7 @@ const AddCampground = () => {
   const { isCreated, isError, isLoading, message, campground } = useSelector(
     (state) => state.campgrounds
   )
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(reset())
-  //   }
-  // })
+ 
   useEffect(() => {
     if (isError) {
       toast.error(message)

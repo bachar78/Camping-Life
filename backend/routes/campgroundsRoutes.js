@@ -3,6 +3,8 @@ const router = express.Router()
 const { storage } = require('../utils/cloudinary.js')
 const multer = require('multer')
 const upload = multer({ storage })
+const reviewRouter = require('./reviewRoutes')
+router.use('/:id/reviews', reviewRouter)
 const {
   getAllCampgrounds,
   getCampground,
@@ -10,7 +12,6 @@ const {
   createCampground,
   updateCampground,
 } = require('../controllers/campgroundsController')
-
 router
   .route('/')
   .get(getAllCampgrounds)
