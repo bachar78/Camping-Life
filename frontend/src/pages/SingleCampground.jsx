@@ -11,10 +11,10 @@ import {
   deleteCampground,
 } from '../features/campgrounds/campgroundsSlice'
 import { getReviews } from '../features/reviews/reviewsSlice'
-
+import styled from 'styled-components'
 import MapCampground from '../components/Maps/MapCampground'
 import Review from '../components/reviews/Review'
-import { Carousel } from 'react-bootstrap'
+
 
 const SingleCampground = () => {
   const navigate = useNavigate()
@@ -54,21 +54,6 @@ const SingleCampground = () => {
       {campground && (
         <>
           <MapCampground campground={campground} />
-          <Carousel>
-            {campground.images && campground.images.map((image, index) => (
-              <Carousel.Item key={index} interval={3000}>
-                <img
-                  className='d-block w-100'
-                  src={image.url}
-                  alt={image.fileName}
-                />
-                <Carousel.Caption>
-                  <h3>{campground.title}</h3>
-                  <p>{campground.description}</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-            ))}
-          </Carousel>
           <motion.h1 variants={fade}>{campground.title}</motion.h1>
           <motion.h1 variants={fade}>{campground.state}</motion.h1>
           <motion.h1 variants={fade}>{campground.location}</motion.h1>
@@ -99,5 +84,7 @@ const SingleCampground = () => {
     </motion.div>
   )
 }
+
+
 
 export default SingleCampground

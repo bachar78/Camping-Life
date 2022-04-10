@@ -5,9 +5,17 @@ import { createReview, reset } from '../../features/reviews/reviewsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Spinner from '../Spinner'
+import { FaStar } from 'react-icons/fa'
+
+const colors = {
+  orange: '#FFBA5A',
+  grey: '#a9a9a9',
+}
 const FormReview = () => {
+  const stars = Array(5).fill(0)
   const navigate = useNavigate()
-  const [reviewData, setReviewData] = useState({ review: '', rating: 1 })
+  const [reviewData, setReviewData] = useState({ review: '', rating: 0 })
+  const [hoverValue, setHoverValue] = useState(null)
   const { review, rating } = reviewData
   const { id } = useParams()
   const dispatch = useDispatch()
@@ -16,6 +24,15 @@ const FormReview = () => {
   }
   const { isLoading, isError, message } = useSelector((state) => state.reviews)
 
+  const handleHover = (value) => {
+    setReviewData((prev) => ({ ...prev, rating: value }))
+  }
+  const handleMouseOver = (value) => {
+    setHoverValue(value)
+  }
+  const handleMouseLeave = () => {
+    setHoverValue(null)
+  }
   const onSubmit = (e) => {
     e.preventDefault()
     const data = { campId: id, reviewData }
@@ -35,17 +52,27 @@ const FormReview = () => {
   return (
     <>
       <h1>Leave a review</h1>
+      {stars.map((_, index) => {
+        return (
+          <FaStar
+            key={index}
+            size={34}
+            style={{
+              marginRight: 10,
+              cursor: 'pointer',
+            }}
+            color={
+              (hoverValue || reviewData.rating) > index
+                ? colors.orange
+                : colors.grey
+            }
+            onClick={() => handleHover(index + 1)}
+            onMouseOver={() => handleMouseOver(index + 1)}
+            onMouseLeave={() => handleMouseLeave()}
+          />
+        )
+      })}
       <Form onSubmit={onSubmit}>
-        <label htmlFor='rating'>Rating</label>
-        <input
-          type='range'
-          min='1'
-          max='5'
-          name='rating'
-          id='rating'
-          value={rating}
-          onChange={onChange}
-        />
         <label htmlFor='review'>Review Text</label>
         <textarea
           id='review'
