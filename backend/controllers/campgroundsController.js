@@ -20,7 +20,9 @@ const getAllCampgrounds = asyncHandler(async (req, res) => {
 //@access Public
 const getCampground = asyncHandler(async (req, res) => {
   const { id } = req.params
-  const campground = await Campground.findById(id).populate('reviews')
+  const campground = await Campground.findById(id)
+    .populate('reviews')
+    .populate('owner')
   if (!campground) {
     res.status(404)
     throw new Error('campground not found')
@@ -33,14 +35,15 @@ const getCampground = asyncHandler(async (req, res) => {
 //@access Private
 const deleteCampground = asyncHandler(async (req, res) => {
   const { id } = req.params
-
   const campground = await Campground.findById(id)
-
   if (!campground) {
     res.status(404)
     throw new Error('campground not found')
   }
-
+  if (campground.owner.toString() !== req.user._id.toString()) {
+    res.status(404)
+    throw new Error('You are not authorized to delete this campground')
+  }
   await campground.remove()
   for (let image of campground.images) {
     await cloudinary.uploader.destroy(image.filename, (result) =>
@@ -84,6 +87,7 @@ const createCampground = asyncHandler(async (req, res) => {
     longitude: data.results[0].lon,
     state: data.results[0].state,
     zip_code,
+    owner: req.user._id,
     images:
       req.files.length > 0
         ? req.files.map((photo) => ({
@@ -109,6 +113,10 @@ const updateCampground = asyncHandler(async (req, res) => {
   if (!campground) {
     res.status(401)
     throw new Error('Campground not found')
+  }
+  if (campground.owner.toString() !== req.user._id.toString()) {
+    res.status(404)
+    throw new Error('You are not authorized to Edit this campground')
   }
   if (req.body.zip_code !== campground.zip_code) {
     const { data } = await axios.get(

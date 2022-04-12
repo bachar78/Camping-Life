@@ -15,7 +15,6 @@ import styled from 'styled-components'
 import MapCampground from '../components/Maps/MapCampground'
 import Review from '../components/reviews/Review'
 
-
 const SingleCampground = () => {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -24,7 +23,7 @@ const SingleCampground = () => {
     (state) => state.campgrounds
   )
   const { reviews } = useSelector((state) => state.reviews)
-
+  console.log(campground)
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -55,6 +54,7 @@ const SingleCampground = () => {
         <>
           <MapCampground campground={campground} />
           <motion.h1 variants={fade}>{campground.title}</motion.h1>
+          <motion.h3 variants={fade}>Submitted By: { campground.owner.username}</motion.h3>
           <motion.h1 variants={fade}>{campground.state}</motion.h1>
           <motion.h1 variants={fade}>{campground.location}</motion.h1>
           <motion.h1 variants={fade}>{campground.zip_code}</motion.h1>
@@ -84,7 +84,5 @@ const SingleCampground = () => {
     </motion.div>
   )
 }
-
-
 
 export default SingleCampground

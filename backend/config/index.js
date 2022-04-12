@@ -30,6 +30,7 @@ const seedDb = async () => {
       longitude: data[i].Longitude,
       zip_code: data[i].Zip_code,
       forSell: false,
+      owner: '6255cef0b37315ba448314b2',
       images: [
         {
           url: sample(images),

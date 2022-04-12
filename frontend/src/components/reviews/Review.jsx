@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FaStar, FStar } from 'react-icons/fa'
+import { FaStar } from 'react-icons/fa'
 
 const colors = {
   orange: '#FFBA5A',

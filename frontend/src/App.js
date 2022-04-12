@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import EditForm from './pages/FormComponents/EditForm'
 //Animation
 import { AnimatePresence } from 'framer-motion'
+import SignIn from './pages/Signing/SignIn'
+import SignUp from './pages/Signing/SignUp'
 
 function App() {
   let location = useLocation()
@@ -25,9 +27,11 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/campgrounds' element={<AllCampgrounds />} />
           <Route path='/new' element={<AddCampground />} />
-          <Route path='/campgrounds/:id/edit' element={ <EditForm/>}/>
+          <Route path='/campgrounds/:id/edit' element={<EditForm />} />
           <Route path='/campgrounds/:id' element={<SingleCampground />} />
           <Route path='/contacts' element={<ContactUs />} />
+          <Route path='/login' element={<SignIn />} />
+          <Route path='/register' element={<SignUp />} />
         </Routes>
       </AnimatePresence>
       <ToastContainer />

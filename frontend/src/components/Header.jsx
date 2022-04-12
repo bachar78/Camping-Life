@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { GiCampingTent } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router'
 import { motion } from 'framer-motion'
@@ -9,7 +10,8 @@ function Header() {
     <Nav>
       <h1>
         <Link id='Logo' to='/'>
-          CampLIFE
+          <h3>CampLIFE</h3>
+          <GiCampingTent size={50} />
         </Link>
       </h1>
       <ul>
@@ -23,6 +25,10 @@ function Header() {
         </li>
         <li>
           <Link to='/login'>Login</Link>
+          {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
+        </li>
+        <li>
+          <Link to='/contacts'>Book</Link>
           {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
         </li>
       </ul>
@@ -52,6 +58,12 @@ const Nav = styled.nav`
     #Logo {
       font-size: 2rem;
       font-family: 'Lobster', cursive;
+      font-weight: lighter;
+      display: flex;
+      align-items: center;
+    }
+    h3 {
+      margin-right: 0.5rem;
       font-weight: lighter;
     }
   }
