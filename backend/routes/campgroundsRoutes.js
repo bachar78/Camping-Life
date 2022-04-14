@@ -12,7 +12,7 @@ const {
   createCampground,
   updateCampground,
 } = require('../controllers/campgroundsController')
-const { isLoggedIn } = require('../middleware/authorization')
+const { isLoggedIn, isOwner } = require('../middleware/authorization')
 router
   .route('/')
   .get(getAllCampgrounds)
@@ -20,7 +20,7 @@ router
 router
   .route('/:id')
   .get(getCampground)
-  .delete(isLoggedIn, deleteCampground)
-  .put(isLoggedIn, upload.array('image'), updateCampground)
+  .delete(isLoggedIn, isOwner, deleteCampground)
+  .put(isLoggedIn, isOwner, upload.array('image'), updateCampground)
 
 module.exports = router

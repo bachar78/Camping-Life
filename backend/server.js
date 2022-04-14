@@ -13,6 +13,7 @@ const session = require('express-session')
 const passport = require('passport')
 const localStrategy = require('passport-local')
 const User = require('./models/userModel')
+const MongoDBStore = require('connect-mongo')
 
 //connect to database
 connectDB()
@@ -25,12 +26,23 @@ app.use(express.json({ limit: '50mb' }))
 // //Cookies parser middleware
 // app.use(cookieParser(process.env.EXPRESS_SESSION))
 
+const store = MongoDBStore.create({
+  mongoUrl: process.env.MONGO_URI,
+  secret: process.env.EXPRESS_SESSION,
+  touchAfter: 24 * 60 * 60,
+})
+store.on('error', function (e) {
+  console.log('SESSION STORE ERROR', e)
+})
 const sessionConfig = {
+  store,
+  name: 'CampLife',
   secret: process.env.EXPRESS_SESSION,
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
+    // secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },

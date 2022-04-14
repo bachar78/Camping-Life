@@ -10,10 +10,14 @@ const colors = {
 const Review = ({ review }) => {
   const stars = Array(5).fill(0)
   const rating = stars.map((rate, index) => (
-    <FaStar key={index} color={review.rating > index ? colors.orange : colors.grey} />
+    <FaStar
+      key={index}
+      color={review.rating > index ? colors.orange : colors.grey}
+    />
   ))
   return (
     <Container>
+      <h4>{review.author.username} By:</h4>
       <h4>{rating}</h4>
       <h4>{review.review}</h4>
       <div>

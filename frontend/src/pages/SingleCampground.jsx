@@ -23,7 +23,7 @@ const SingleCampground = () => {
     (state) => state.campgrounds
   )
   const { reviews } = useSelector((state) => state.reviews)
-  console.log(campground)
+  console.log(reviews)
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -43,7 +43,8 @@ const SingleCampground = () => {
   if (isLoading) {
     return <Spinner />
   }
-
+  console.log(campground)
+  console.log(reviews)
   return (
     <motion.div
       exit='exit'
@@ -54,7 +55,9 @@ const SingleCampground = () => {
         <>
           <MapCampground campground={campground} />
           <motion.h1 variants={fade}>{campground.title}</motion.h1>
-          <motion.h3 variants={fade}>Submitted By: { campground.owner.username}</motion.h3>
+          <motion.h3 variants={fade}>
+            Submitted By: {campground.owner && campground.owner.username}
+          </motion.h3>
           <motion.h1 variants={fade}>{campground.state}</motion.h1>
           <motion.h1 variants={fade}>{campground.location}</motion.h1>
           <motion.h1 variants={fade}>{campground.zip_code}</motion.h1>

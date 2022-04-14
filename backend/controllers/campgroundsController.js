@@ -21,7 +21,12 @@ const getAllCampgrounds = asyncHandler(async (req, res) => {
 const getCampground = asyncHandler(async (req, res) => {
   const { id } = req.params
   const campground = await Campground.findById(id)
-    .populate('reviews')
+    .populate({
+      path: 'reviews',
+      populate: {
+        path: 'author',
+      },
+    })
     .populate('owner')
   if (!campground) {
     res.status(404)
@@ -39,10 +44,6 @@ const deleteCampground = asyncHandler(async (req, res) => {
   if (!campground) {
     res.status(404)
     throw new Error('campground not found')
-  }
-  if (campground.owner.toString() !== req.user._id.toString()) {
-    res.status(404)
-    throw new Error('You are not authorized to delete this campground')
   }
   await campground.remove()
   for (let image of campground.images) {

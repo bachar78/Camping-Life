@@ -21,6 +21,7 @@ const createReview = asyncHandler(async (req, res) => {
     review,
     rating,
     campground_id: campground._id,
+    author: req.user._id,
   })
   campground.reviews.push(newReview._id)
   await campground.save()
@@ -42,7 +43,9 @@ const getReviews = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Campground not found')
   }
-  const reviews = await Review.find({ campground_id: campground._id })
+  const reviews = await Review.find({ campground_id: campground._id }).populate(
+    'author'
+  )
   if (!reviews) {
     res.status(400)
     throw new Error('No reviews to show')
@@ -56,14 +59,16 @@ const getReviews = asyncHandler(async (req, res) => {
 const updateReview = asyncHandler(async (req, res) => {
   const { review, rating } = req.body
   if (!review && !rating) {
-    res.status(400)
+    res.status(401)
     throw new Error('You should update at least one field')
   }
   const reviewToUpdate = await Review.findById(req.params.reviewId)
-  if (reviewToUpdate) {
-    reviewToUpdate.review = review ? review : reviewToUpdate.review
-    reviewToUpdate.rating = rating ? rating : reviewToUpdate.rating
+  if (!reviewToUpdate) {
+    res.status(400)
+    throw new Error('Review not exists')
   }
+  reviewToUpdate.review = review ? review : reviewToUpdate.review
+  reviewToUpdate.rating = rating ? rating : reviewToUpdate.rating
   const updatedReview = await reviewToUpdate.save()
 
   if (!updatedReview) {
@@ -78,19 +83,21 @@ const updateReview = asyncHandler(async (req, res) => {
 const deleteReview = asyncHandler(async (req, res) => {
   const { id, reviewId } = req.params
   const deletedReview = await Review.findByIdAndDelete(reviewId)
-  if (!deletedReview) {
-    res.status(400)
-    throw new Error('Review can not be deleted')
-  }
   const campground = await Campground.findById(id)
   if (!campground) {
     res.status(400)
     throw new Error('Campground can not be found')
   }
-  campground.reviews = campground.reviews.filter(
-    (review) => review.toString() !== deletedReview._id.toString()
-  )
-  await campground.save()
+
+  await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
+  // campground.reviews = campground.reviews.filter(
+  //   (review) => review.toString() !== deletedReview._id.toString()
+  // )
+  // await campground.save()
+  if (!deletedReview) {
+    res.status(400)
+    throw new Error('Review can not be deleted')
+  }
   res.status(200).json(deletedReview)
 })
 

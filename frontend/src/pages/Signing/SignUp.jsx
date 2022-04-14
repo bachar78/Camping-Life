@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-// import { register, reset } from '../features/auth/authSlice'
+import { register } from '../../features/auth/authSlice'
 import Spinner from '../../components/Spinner'
 import styled from 'styled-components'
 
@@ -17,14 +17,19 @@ const SignUp = () => {
   const { username, email, password, password2 } = formData
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  //   const { member, isLoading, isError, isSuccess, message } = useSelector(
-  //     (state) => state.auth
-  //   )
+  const { user, isLoading, isError, isLogged, message } = useSelector(
+    (state) => state.auth
+  )
 
   const onChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
-
+  useEffect(() => {
+    if (isLogged) {
+      toast.success("You were registered successfully")
+      navigate(-1)
+    }
+  }, [isLogged])
   const onSubmit = (e) => {
     e.preventDefault()
     if (password !== password2) {
@@ -35,7 +40,7 @@ const SignUp = () => {
         email,
         password,
       }
-      console.log(userData)
+      dispatch(register(userData))
       setFormData({
         username: '',
         email: '',

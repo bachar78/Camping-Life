@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-// import { login, reset } from '../features/auth/authSlice'
+import { login } from '../../features/auth/authSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
@@ -10,35 +10,36 @@ import styled from 'styled-components'
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
   })
-  //   const dispatch = useDispatch()
-  //   const { member, isLoading, isError, isSuccess, message } = useSelector(
-  //     (state) => state.auth
-  //   )
+  const dispatch = useDispatch()
+  const { user, isLoading, isError, isLogged, message } = useSelector(
+    (state) => state.auth
+  )
   const navigate = useNavigate()
 
-  const { email, password } = formData
+  const { username, password } = formData
   const onChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
+  useEffect(() => {
+    if (isLogged) {
+      toast.success('You login in successfully')
+      navigate('/')
+    }
+  }, [isLogged])
   const onSubmit = (e) => {
     e.preventDefault()
-    const memberData = {
-      email,
-      password,
+    if (!username || !password) {
+      return
     }
-    setFormData({
-      email: '',
-      password: '',
-    })
-    // dispatch(login(memberData))
-    console.log(formData)
+    const userData = { username, password }
+    dispatch(login(userData))
   }
-  //   if (isLoading) {
-  //     return <Spinner />
-  //   }
+  if (isLoading) {
+    return <Spinner />
+  }
   return (
     <div>
       <h1>
@@ -48,16 +49,16 @@ const SignIn = () => {
         <form onSubmit={onSubmit}>
           <div>
             <input
-              type='email'
-              id='email'
-              name='email'
-              value={email}
+              type='text'
+              id='username'
+              name='username'
+              value={username}
               onChange={onChange}
-              placeholder='Enter your Email'
+              placeholder='Enter your username'
               autoComplete='off'
               required
             />
-            <label htmlFor='email'>Enter your Email</label>
+            <label htmlFor='email'>Enter your Username</label>
           </div>
           <div>
             <input

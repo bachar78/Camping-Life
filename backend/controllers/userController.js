@@ -25,10 +25,11 @@ const registerUser = asyncHandler(async (req, res, next) => {
 })
 
 const userLogin = asyncHandler(async (req, res) => {
-  if (req.user) {
-    res.json(req.user)
+  if (!req.user) {
+    res.status(400)
+    throw new Error('You are not login')
   }
-  throw new Error('You are not login')
+  res.json(req.user)
 })
 
 const logout = asyncHandler(async (req, res) => {

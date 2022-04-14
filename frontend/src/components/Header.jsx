@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { GiCampingTent } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router'
 import { motion } from 'framer-motion'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../features/auth/authSlice'
+import { toast } from 'react-toastify'
 
 function Header() {
+  const dispatch = useDispatch()
+  const { user, isLogged } = useSelector((state) => state.auth)
+  const onLogout = () => {
+    dispatch(logout())
+  }
+  console.log(isLogged)
   return (
     <Nav>
       <h1>
@@ -19,14 +28,24 @@ function Header() {
           <Link to='/campgrounds'>Campgrounds</Link>
           {/* <Line variants={pathname==='/campgrounds'?UnderLine:''} initial="hidden" animate="show"></Line> */}
         </li>
-        <li>
-          <Link to='/register'>Register</Link>
-          {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
-        </li>
-        <li>
-          <Link to='/login'>Login</Link>
-          {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
-        </li>
+        {isLogged ? (
+          <li>
+            <button onClick={onLogout}>Logout</button>
+            {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
+          </li>
+        ) : (
+          <>
+            <li>
+              <Link to='/register'>Register</Link>
+              {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
+            </li>
+            <li>
+              <Link to='/login'>Login</Link>
+              {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
+            </li>
+          </>
+        )}
+
         <li>
           <Link to='/contacts'>Book</Link>
           {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}

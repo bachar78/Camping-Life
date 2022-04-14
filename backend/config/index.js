@@ -5,17 +5,13 @@ const data = require('./data')
 const { places, descriptors, images } = require('./seedHelpers')
 
 //connect Mongo
-mongoose.connect(
-  'mongodb+srv://bachar78:BrasiliA2018@react-camping.5ylye.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-)
+mongoose.connect(process.env.MONGO_URI)
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error'))
 db.once('open', () => {
   console.log('Database connected')
 })
-
 const sample = (array) => array[Math.floor(Math.random() * array.length)]
-
 const seedDb = async () => {
   await Campground.deleteMany({})
   for (let i = 0; i < 25; i++) {
