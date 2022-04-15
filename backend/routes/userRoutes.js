@@ -10,7 +10,7 @@ const {
 } = require('../controllers/userController')
 
 router.route('/').post(registerUser)
-router.route('/new').get(isLoggedIn, getUser)
+router.route('/user').get(isLoggedIn, getUser)
 router.route('/login').post(passport.authenticate('local'), userLogin)
 router.route('/logout').get(logout)
 

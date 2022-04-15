@@ -14,7 +14,6 @@ function Header() {
   const onLogout = () => {
     dispatch(logout())
   }
-  console.log(isLogged)
   return (
     <Nav>
       <h1>

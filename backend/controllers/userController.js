@@ -38,6 +38,11 @@ const logout = asyncHandler(async (req, res) => {
 })
 
 const getUser = asyncHandler(async (req, res) => {
-  res.status(200).json(req.user)
+  if (req.user) {
+    res.status(200).json(req.user)
+  } else {
+    res.status(404)
+    throw new Error('Not authorized')
+  }
 })
 module.exports = { registerUser, userLogin, getUser, logout }

@@ -23,7 +23,6 @@ const SingleCampground = () => {
     (state) => state.campgrounds
   )
   const { reviews } = useSelector((state) => state.reviews)
-  console.log(reviews)
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -43,8 +42,6 @@ const SingleCampground = () => {
   if (isLoading) {
     return <Spinner />
   }
-  console.log(campground)
-  console.log(reviews)
   return (
     <motion.div
       exit='exit'

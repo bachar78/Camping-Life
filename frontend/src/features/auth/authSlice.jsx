@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 import authService from './authService'
-
-// // Get member from localstorage
-// const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
   user: null,
@@ -63,6 +61,19 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     return thunkAPI.rejectWithValue(message)
   }
 })
+// Get User
+export const getUser = createAsyncThunk('auth/getUser', async (_, thunkAPI) => {
+  try {
+    return await authService.getUser()
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -102,6 +113,22 @@ export const authSlice = createSlice({
         state.message = action.payload
         state.member = null
       })
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isLogged = true
+        state.user = action.payload
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.isLogged = false
+        state.message = action.payload
+        state.member = null
+      })
+
       .addCase(logout.pending, (state) => {
         state.isLoading = true
       })

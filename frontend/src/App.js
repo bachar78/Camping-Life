@@ -11,13 +11,20 @@ import AddCampground from './pages/FormComponents/AddCampground'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditForm from './pages/FormComponents/EditForm'
+import { useEffect } from 'react'
 //Animation
 import { AnimatePresence } from 'framer-motion'
 import SignIn from './pages/Signing/SignIn'
 import SignUp from './pages/Signing/SignUp'
+import { useSelector, useDispatch } from 'react-redux'
+import { getUser } from './features/auth/authSlice'
 
 function App() {
   let location = useLocation()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getUser()) 
+  }, [])
   return (
     <Container>
       <GlobalStyle />
