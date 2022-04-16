@@ -38,7 +38,7 @@ const FormReview = () => {
     const data = { campId: id, reviewData }
     dispatch(createReview(data))
     setReviewData({ review: '', rating: 1 })
-    navigate(`/campgrounds/${id}`)
+    
   }
   useEffect(() => {
     if (isError) {

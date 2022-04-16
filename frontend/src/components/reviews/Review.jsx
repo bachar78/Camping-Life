@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaStar } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
 
 const colors = {
   orange: '#FFBA5A',
@@ -8,6 +9,10 @@ const colors = {
 }
 
 const Review = ({ review }) => {
+  const dispatch = useDispatch()
+  const { user } = useSelector(
+    (state) => state.auth
+  )
   const stars = Array(5).fill(0)
   const rating = stars.map((rate, index) => (
     <FaStar
@@ -17,7 +22,7 @@ const Review = ({ review }) => {
   ))
   return (
     <Container>
-      <h4>{review.author.username} By:</h4>
+      <h4> By:{review.author.username}</h4>
       <h4>{rating}</h4>
       <h4>{review.review}</h4>
       <div>

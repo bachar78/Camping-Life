@@ -118,8 +118,8 @@ export const reviewSlice = createSlice({
       .addCase(createReview.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.reviews.push(action.payload)
         state.review = action.payload
+        state.reviews.push(action.payload)
       })
       .addCase(createReview.rejected, (state, action) => {
         state.isLoading = false
