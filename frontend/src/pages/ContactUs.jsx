@@ -1,16 +1,35 @@
 import React from 'react'
 //frame motion
-import { AnimateSharedLayout, motion } from "framer-motion";
-import styled from "styled-components";
+import { AnimateSharedLayout, motion } from 'framer-motion'
+import styled from 'styled-components'
 import { pageAnimation, titleAnim } from '../animation'
+import Toggle from '../components/Toggle'
+import Contact from './components/Contact'
 const ContactUs = () => {
   return (
-    <Contacts exit='exit' variants={pageAnimation} initial='hidden' animate='show'>
-     <Hidden>
+    <Contacts
+      exit='exit'
+      variants={pageAnimation}
+      initial='hidden'
+      animate='show'>
+      <Hidden>
         <motion.h1 variants={titleAnim}>
           OUR <span>OFFICES</span>.
         </motion.h1>
       </Hidden>
+      <AnimateSharedLayout>
+        <Offices>
+          <Toggle city='Amsterdam'>
+            <Contact />
+          </Toggle>
+          <Toggle city='Rotterdam'>
+            <Contact />
+          </Toggle>
+          <Toggle city='Utrecht'>
+            <Contact />
+          </Toggle>
+        </Offices>
+      </AnimateSharedLayout>
     </Contacts>
   )
 }
@@ -31,7 +50,9 @@ const Contacts = styled(motion.div)`
   text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.9);
   box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.9);
   h1 {
-    font-size: 4rem;
+    font-size: 3rem;
+    margin: 3rem 0;
+    text-align:center;
     span {
       font-style: italic;
     }
@@ -40,23 +61,16 @@ const Contacts = styled(motion.div)`
   h2 {
     font-weight: lighter;
   }
-
-  /* .contact-line {
-    background: #cccccc;
-    height: 0.2rem;
-    margin: 2rem 0rem;
-    width: 100%;
-  }
-  .office {
-    padding-top: 3rem;
-    cursor: pointer;
-    @media (max-width: 1300px) {
-      text-align: center;
-    } */
-  
-`;
+`
+const Offices = styled(motion.dev)`
+  overflow: hidden;
+  display: grid;
+  padding: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-column-gap: 2rem;
+`
 
 const Hidden = styled(motion.div)`
   overflow: hidden;
-`;
+`
 export default ContactUs

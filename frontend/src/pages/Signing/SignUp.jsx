@@ -4,6 +4,8 @@ import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { register } from '../../features/auth/authSlice'
+import { motion } from 'framer-motion'
+import { pageAnimation } from '../../animation'
 import Spinner from '../../components/Spinner'
 import styled from 'styled-components'
 
@@ -26,7 +28,7 @@ const SignUp = () => {
   }
   useEffect(() => {
     if (isLogged) {
-      toast.success("You were registered successfully")
+      toast.success('You were registered successfully')
       navigate(-1)
     }
   }, [isLogged])
@@ -51,7 +53,13 @@ const SignUp = () => {
   }
 
   return (
-    <div>
+    <Container variants={pageAnimation} initial='hidden' animate='show'>
+      <Video>
+        <video className='bg_video' autoPlay muted loop>
+          <source src='Campfire.mp4' type='video/mp4' />
+          Your browser is not supported!
+        </video>
+      </Video>
       <h1>
         <FaUser /> Register
       </h1>
@@ -118,8 +126,33 @@ const SignUp = () => {
           </div>
         </form>
       </section>
-    </div>
+    </Container>
   )
 }
 
+const Container = styled(motion.div)`
+  min-height: 90vh;
+  position: relative;
+  h1 {
+    text-align: center;
+    font-size: 4rem;
+    padding: 6rem;
+    color: #23d997;
+  }
+`
+const Video = styled(motion.div)`
+  position: absolute;
+  z-index: -100;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.15;
+  overflow: hidden;
+  .bg_video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+`
 export default SignUp
