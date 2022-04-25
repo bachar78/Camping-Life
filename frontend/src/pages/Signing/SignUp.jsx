@@ -202,6 +202,7 @@ const FormContainer = styled(motion.div)`
           left: 0px;
           transition: all 0.3s ease;
           margin-left: .5rem;
+          color: black;
         }
         &::after {
           content: '';
@@ -221,7 +222,7 @@ const FormContainer = styled(motion.div)`
   .form-group input:valid + label .form-span {
     transform: translateY(-150%);
     font-size: 1.1rem;
-    color: #595f6e;
+    color: #23d997;
   }
   .form-group input:focus + label::after,
   .form-group input:valid + label::after {
