@@ -63,9 +63,9 @@ const SignUp = () => {
       <h1>
         <FaUser /> Register
       </h1>
-      <section>
+      <FormContainer>
         <form onSubmit={onSubmit}>
-          <div>
+          <div className='form-group'>
             <input
               type='text'
               className='form-control'
@@ -73,13 +73,14 @@ const SignUp = () => {
               name='username'
               value={username}
               onChange={onChange}
-              placeholder='Enter your Full Name'
               autoComplete='off'
               required
             />
-            <label htmlFor='username'>Enter your Full Name</label>
+            <label className='form-label' htmlFor='username'>
+              <span className='form-span'>Enter your Name</span>
+            </label>
           </div>
-          <div>
+          <div className='form-group'>
             <input
               type='email'
               className='form-control'
@@ -87,13 +88,14 @@ const SignUp = () => {
               name='email'
               value={email}
               onChange={onChange}
-              placeholder='Enter your Email'
               autoComplete='off'
               required
             />
-            <label htmlFor='email'>Enter your Email</label>
+            <label className='form-label' htmlFor='email'>
+              <span className='form-span'>Enter your Email</span>
+            </label>
           </div>
-          <div>
+          <div className='form-group'>
             <input
               type='password'
               className='form-control'
@@ -101,13 +103,14 @@ const SignUp = () => {
               name='password'
               value={password}
               onChange={onChange}
-              placeholder='Enter Password'
               autoComplete='off'
               required
             />
-            <label htmlFor='password'>Enter Password</label>
+            <label className='form-label' htmlFor='password'>
+              <span className='form-span'>Enter Password</span>
+            </label>
           </div>
-          <div>
+          <div className='form-group'>
             <input
               type='password'
               className='form-control'
@@ -115,17 +118,18 @@ const SignUp = () => {
               name='password2'
               value={password2}
               onChange={onChange}
-              placeholder='Confirm your Password'
               autoComplete='off'
               required
             />
-            <label htmlFor='password'>Confirm your Password</label>
+            <label className='form-label' htmlFor='password'>
+              <span className='form-span'>Confirm your Password</span>
+            </label>
           </div>
-          <div>
+          <div className='form-group'>
             <button type='submit'>Submit</button>
           </div>
         </form>
-      </section>
+      </FormContainer>
     </Container>
   )
 }
@@ -153,6 +157,75 @@ const Video = styled(motion.div)`
     height: 100%;
     width: 100%;
     object-fit: cover;
+  }
+`
+const FormContainer = styled(motion.div)`
+  min-height: 60vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  form {
+    width: 50%;
+    min-height: 50vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    .form-group {
+      position: relative;
+      width: 100%;
+      height: 5rem;
+      font-size:1.6rem;
+      overflow: hidden;
+      input {
+        width: 100%;
+        height: 100%;
+        padding-top: 20px;
+        padding-bottom: 0px;
+        border: none;
+        outline: none;
+        font-size: 1.6rem;
+      }
+      label {
+        position: absolute;
+        bottom: 9px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        border-bottom: 3px solid transparent; 
+
+        .form-span {
+          position: absolute;
+          bottom: 13px;
+          left: 0px;
+          transition: all 0.3s ease;
+          margin-left: .5rem;
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          border-bottom: 5px solid #5fd36a;
+          left: 0px;
+          bottom: -12px;
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+      }
+    }
+  }
+  .form-group input:focus + label .form-span,
+  .form-group input:valid + label .form-span {
+    transform: translateY(-150%);
+    font-size: 1.1rem;
+    color: #595f6e;
+  }
+  .form-group input:focus + label::after,
+  .form-group input:valid + label::after {
+    transform: translateX(0%);
   }
 `
 export default SignUp
