@@ -63,6 +63,7 @@ const SignUp = () => {
       <h1>
         <FaUser /> Register
       </h1>
+
       <FormContainer>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
@@ -126,7 +127,7 @@ const SignUp = () => {
             </label>
           </div>
           <div className='form-group'>
-            <button type='submit'>Submit</button>
+            <button type='submit'>Sign Up</button>
           </div>
         </form>
       </FormContainer>
@@ -140,10 +141,11 @@ const Container = styled(motion.div)`
   h1 {
     text-align: center;
     font-size: 4rem;
-    padding: 6rem;
+    padding: 4rem;
     color: #23d997;
   }
 `
+
 const Video = styled(motion.div)`
   position: absolute;
   z-index: -100;
@@ -151,7 +153,7 @@ const Video = styled(motion.div)`
   left: 0;
   height: 100%;
   width: 100%;
-  opacity: 0.15;
+  opacity: 0.4;
   overflow: hidden;
   .bg_video {
     height: 100%;
@@ -160,32 +162,39 @@ const Video = styled(motion.div)`
   }
 `
 const FormContainer = styled(motion.div)`
-  min-height: 60vh;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.75);
   form {
-    width: 50%;
-    min-height: 50vh;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
+    width: 100%;
+    min-height: 40vh;
     .form-group {
       position: relative;
       width: 100%;
       height: 5rem;
-      font-size:1.6rem;
+      font-size: 1.5rem;
       overflow: hidden;
+      &:not(:last-child) {
+        margin-bottom: 5rem;
+      }
       input {
         width: 100%;
         height: 100%;
         padding-top: 20px;
-        padding-bottom: 0px;
         border: none;
         outline: none;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+      }
+      button {
+        width: 100%;
+        background: #23d997;
+        height: 5rem;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1rem;
+        &:hover {
+          background: transparent;
+        }
       }
       label {
         position: absolute;
@@ -194,15 +203,17 @@ const FormContainer = styled(motion.div)`
         width: 100%;
         height: 100%;
         pointer-events: none;
-        border-bottom: 3px solid transparent; 
-
+        border-bottom: 3px solid transparent;
+        span {
+        }
         .form-span {
           position: absolute;
           bottom: 13px;
           left: 0px;
           transition: all 0.3s ease;
-          margin-left: .5rem;
+          margin-left: 0.5rem;
           color: black;
+          font-weight: normal;
         }
         &::after {
           content: '';

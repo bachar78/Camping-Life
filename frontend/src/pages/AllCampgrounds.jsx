@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import MapCluster from '../components/Maps/MapCluster'
 import { fade } from '../animation'
 import styled from 'styled-components'
-import CampgroundList from './components/CampgroundList'
+import CampgroundCard from './components/Card'
 
 //framer motion
 import { motion } from 'framer-motion'
@@ -49,7 +49,7 @@ const AllCampgrounds = () => {
       <ContainerCampground variants={fade}>
         {campgrounds &&
           campgrounds.map((campground) => (
-            <CampgroundList campground={campground} key={campground._id} />
+            <CampgroundCard campground={campground} key={campground._id} />
           ))}
       </ContainerCampground>
     </Container>
@@ -76,9 +76,10 @@ const Container = styled(motion.div)`
 const ContainerCampground = styled(motion.div)`
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   grid-column-gap: 3rem;
   grid-row-gap: 5rem;
+  /* background: #fff; */
 `
 
 const Map = styled(motion.div)`

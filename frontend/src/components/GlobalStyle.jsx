@@ -25,7 +25,7 @@ html {
 
 button {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     cursor: pointer;
     padding: 1rem 2rem;
     border: 3px solid #23d997;
@@ -61,12 +61,13 @@ p{
 a {
   text-decoration: none;
   color: inherit;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
 }
 
 ul {
   list-style: none;
 }
+
 `
 
 export default GlobalStyle

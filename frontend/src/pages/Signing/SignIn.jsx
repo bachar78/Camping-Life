@@ -43,15 +43,12 @@ const SignIn = () => {
   }
   return (
     <Container variants={pageAnimation} initial='hidden' animate='show'>
-      <Video>
-        <video className='bg_video' autoPlay muted loop>
-          <source src='Campfire.mp4' type='video/mp4' />
-          Your browser is not supported!
-        </video>
-      </Video>
       <h1>
         <FaSignInAlt /> Login
       </h1>
+      <Image>
+        <img src='tent2.jpg' alt='' />
+      </Image>
       <FormContainer>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
@@ -85,7 +82,7 @@ const SignIn = () => {
             </label>
           </div>
           <div className='form-group'>
-            <button type='submit'>Submit</button>
+            <button type='submit'>Sign In</button>
           </div>
         </form>
       </FormContainer>
@@ -99,44 +96,45 @@ const Container = styled(motion.div)`
   h1 {
     text-align: center;
     font-size: 4rem;
-    padding: 6rem;
+    padding: 2rem;
     color: #23d997;
   }
 `
-const Video = styled(motion.div)`
-  position: absolute;
-  z-index: -100;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0.15;
-  overflow: hidden;
-  .bg_video {
-    height: 100%;
+
+const Image = styled(motion.div)`
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  img {
     width: 100%;
+    height: 30vh;
     object-fit: cover;
   }
 `
+
 const FormContainer = styled(motion.div)`
-  min-height: 60vh;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
   form {
-    width: 50%;
+    width: 100%;
     min-height: 50vh;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
     .form-group {
       position: relative;
-      width: 100%;
+      margin-bottom: 2rem;
       height: 5rem;
       font-size: 1.6rem;
       overflow: hidden;
+      button {
+        width: 100%;
+        background: #23d997;
+        height: 5rem;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1rem;
+        &:hover {
+          background: transparent;
+        }
+      }
       input {
         width: 100%;
         height: 100%;
@@ -162,7 +160,7 @@ const FormContainer = styled(motion.div)`
           transition: all 0.3s ease;
           margin-left: 0.5rem;
           color: black;
-          font-weight: bold;
+          font-weight: normal;
         }
         &::after {
           content: '';

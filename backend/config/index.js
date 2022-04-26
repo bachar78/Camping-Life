@@ -14,7 +14,7 @@ db.once('open', () => {
 const sample = (array) => array[Math.floor(Math.random() * array.length)]
 const seedDb = async () => {
   await Campground.deleteMany({})
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 50; i++) {
     await Campground.create({
       title: `${sample(descriptors)} ${sample(places)}`,
       address: data[i].Street + '-' + data[i].State + '-' + data[i].City,
