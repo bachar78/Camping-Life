@@ -36,7 +36,7 @@ export const fade = {
   show: {
     opacity: 1,
     transition: {
-      duration: .5,
+      duration: 0.5,
       ease: 'easeInOut',
     },
   },
@@ -62,26 +62,41 @@ export const photoAnim = {
 }
 
 export const LineAnim = {
-  hidden: { width: "0%" },
+  hidden: { width: '0%' },
   show: {
-    width: "100%",
+    width: '100%',
     transition: { duration: 1 },
   },
-};
+}
 
 export const Slider = {
   hidden: {
-    x: "-130%",
-    skew: "45deg",
+    x: '-130%',
+    skew: '45deg',
   },
   show: {
-    x: "100%",
-    skew: "0deg",
-    transition: { ease: "easeOut", duration: 1 },
+    x: '100%',
+    skew: '0deg',
+    transition: { ease: 'easeOut', duration: 1 },
   },
-};
+}
 
 export const SliderContainer = {
   hidden: { opacity: 1 },
-  show: { opacity: 1, transition: { staggerChildren: 0.25, ease: "easeOut" } },
+  show: { opacity: 1, transition: { staggerChildren: 0.25, ease: 'easeOut' } },
+}
+
+export const scrollReveal = {
+  hidden: {
+    opacity: 0,
+    scale: 0.5,
+    transition: { duration: 0.5 },
+  },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
 };

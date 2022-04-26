@@ -95,7 +95,7 @@ const Container = styled(motion.div)`
   position: relative;
   h1 {
     text-align: center;
-    font-size: 4rem;
+    font-size: 2.5rem;
     padding: 2rem;
     color: #23d997;
   }
@@ -117,49 +117,53 @@ const FormContainer = styled(motion.div)`
   margin: 0 auto;
   form {
     width: 100%;
-    min-height: 50vh;
+    min-height: 40vh;
     .form-group {
       position: relative;
-      margin-bottom: 2rem;
-      height: 5rem;
-      font-size: 1.6rem;
+      width: 100%;
+      height: 4rem;
+      font-size: 1.4rem;
       overflow: hidden;
-      button {
-        width: 100%;
-        background: #23d997;
-        height: 5rem;
-        font-size: 1.8rem;
-        text-transform: uppercase;
-        letter-spacing: 1rem;
-        &:hover {
-          background: transparent;
-        }
+      &:not(:last-child) {
+        margin-bottom: 3rem;
       }
       input {
         width: 100%;
         height: 100%;
         padding-top: 20px;
-        padding-bottom: 0px;
         border: none;
         outline: none;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+      }
+      button {
+        width: 100%;
+        border: 1px solid #23d997;
+        background: transparent;
+        height: 4rem;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        font-weight: lighter;
+        &:hover {
+          background: #23d997;
+        }
       }
       label {
         position: absolute;
-        bottom: 9px;
+        bottom: -6px;
         left: 0;
         width: 100%;
         height: 100%;
         pointer-events: none;
         border-bottom: 3px solid transparent;
-
+        span {
+        }
         .form-span {
           position: absolute;
           bottom: 13px;
           left: 0px;
           transition: all 0.3s ease;
           margin-left: 0.5rem;
-          color: black;
+          color: #3f474783;
           font-weight: normal;
         }
         &::after {
@@ -167,9 +171,9 @@ const FormContainer = styled(motion.div)`
           position: absolute;
           height: 100%;
           width: 100%;
-          border-bottom: 5px solid #5fd36a;
+          border-bottom: 5px solid #23d997;
           left: 0px;
-          bottom: -12px;
+          bottom: 3px;
           transform: translateX(-100%);
           transition: transform 0.3s ease;
         }
@@ -178,9 +182,9 @@ const FormContainer = styled(motion.div)`
   }
   .form-group input:focus + label .form-span,
   .form-group input:valid + label .form-span {
-    transform: translateY(-150%);
+    transform: translateY(-140%);
     font-size: 1.1rem;
-    color: #5fd36a;
+    color: #23d997;
   }
   .form-group input:focus + label::after,
   .form-group input:valid + label::after {

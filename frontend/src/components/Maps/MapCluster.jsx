@@ -9,7 +9,7 @@ function MapCluster({ data }) {
     latitude: 52.132633,
     longitude: 5.291266,
     width: "100%",
-    height: "35vh",
+    height: "30vh",
     zoom: 6,
   });
   const mapRef = useRef();

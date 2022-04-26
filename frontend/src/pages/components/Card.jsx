@@ -2,32 +2,28 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { pageAnimation } from '../../animation'
-
+import UseScroll from '../../hooks/useScrolls'
+import { scrollReveal } from '../../animation'
 function CampgroundCard({ campground }) {
+  const [element, controls, view] = UseScroll()
+  console.log(view)
   return (
-    <motion.div
-      exit='exit'
-      variants={pageAnimation}
-      initial='hidden'
-      animate='show'>
-      <Card>
-        <Image>
-          <img
-            src={campground.images[0] ? campground.images[0].url : ''}
-            alt='campground'
-          />
-        </Image>
-        <Description className='description'>
-          <h1>{campground.title}</h1>
-          <h3>{campground.address}</h3>
-          <h2>Price: ${campground.price}</h2>
-          <Link to={`/campgrounds/${campground._id}`}>
-            <button>view details</button>
-          </Link>
-        </Description>
-      </Card>
-    </motion.div>
+    <Card ref={element}>
+      <Image variants={scrollReveal} initial='hidden' animate={controls}>
+        <img
+          src={campground.images[0] ? campground.images[0].url : ''}
+          alt='campground'
+        />
+      </Image>
+      <Description className='description'>
+        <h1 style={{ fontSize: '1.8rem' }}>{campground.title}</h1>
+        <h3>{campground.address}</h3>
+        <h2>Price: ${campground.price}</h2>
+        <Link to={`/campgrounds/${campground._id}`}>
+          <button>view details</button>
+        </Link>
+      </Description>
+    </Card>
   )
 }
 
@@ -36,12 +32,8 @@ const Card = styled(motion.div)`
   position: relative;
   display: flex;
   align-items: flex-end;
-  box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  &:hover {
-    transform: translateY(20px);
-  }
   &::before {
     content: '';
     position: absolute;
@@ -50,11 +42,7 @@ const Card = styled(motion.div)`
     display: block;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 176, 155, 0.5),
-      rgba(150, 201, 16, 1)
-    );
+    background: rgba(0, 0, 0, 0.7);
     z-index: 2;
     transition: 0.3s all ease-in-out;
     opacity: 0;
@@ -65,6 +53,9 @@ const Card = styled(motion.div)`
   &:hover .description {
     opacity: 1;
     transform: translateY(0px);
+  }
+  &:hover img {
+    transform: scale(1.2);
   }
 `
 const Image = styled(motion.div)`
@@ -78,11 +69,12 @@ const Image = styled(motion.div)`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: 0.3s all ease-out;
   }
 `
 const Description = styled(motion.div)`
   padding: 0rem 0.8rem;
-  height: 85%;
+  height: 100%;
   position: relative;
   z-index: 3;
   color: #fff;
@@ -91,29 +83,37 @@ const Description = styled(motion.div)`
   transition: 0.3s all;
 
   h1 {
-    font-size: 2.2rem;
-    margin: 1rem 0rem;
+    font-size: 1.6rem;
+    margin: 2rem 0rem;
+    transition: 0.3s all;
+    &:hover {
+      color: #23d997;
+    }
   }
   h3 {
-    margin: 2rem 0rem;
+    margin: 3rem 0rem;
     font-size: 1.4rem;
     font-weight: lighter;
     text-align: center;
+    transition: 0.3s all;
+    &:hover {
+      color: #23d997;
+    }
   }
   h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
     font-size: 2.2rem;
     text-align: right;
     font-weight: bold;
+    transition: 0.3s all;
+    &:hover {
+      color: #23d997;
+    }
   }
   button {
     width: 100%;
     text-transform: uppercase;
-    border: 2px solid white;
-    &:hover {
-      background: transparent;
-      background: black;
-    }
+    margin-bottom: 2rem;
   }
 `
 

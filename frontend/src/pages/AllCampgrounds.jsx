@@ -3,13 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { reset, getCampgrounds } from '../features/campgrounds/campgroundsSlice'
 import { Link } from 'react-router-dom'
 import MapCluster from '../components/Maps/MapCluster'
-import { fade } from '../animation'
 import styled from 'styled-components'
 import CampgroundCard from './components/Card'
 
 //framer motion
 import { motion } from 'framer-motion'
-import { pageAnimation } from '../animation'
+import { pageAnimation, SliderContainer } from '../animation'
 import { toast } from 'react-toastify'
 
 const AllCampgrounds = () => {
@@ -38,17 +37,15 @@ const AllCampgrounds = () => {
       variants={pageAnimation}
       initial='hidden'
       animate='show'>
-      <motion.div variants={fade}>
-        <Map>
-          <MapCluster data={campgrounds} />
-        </Map>
-      </motion.div>
+      <Map>
+        <MapCluster data={campgrounds} />
+      </Map>
       <Link to='/new'>
-        <motion.button variants={fade}>Add Campground</motion.button>
+        <motion.button>Add Campground</motion.button>
       </Link>
-      <ContainerCampground variants={fade}>
+      <ContainerCampground>
         {campgrounds &&
-          campgrounds.map((campground) => (
+          campgrounds.map((campground, index) => (
             <CampgroundCard campground={campground} key={campground._id} />
           ))}
       </ContainerCampground>

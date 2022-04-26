@@ -63,7 +63,6 @@ const SignUp = () => {
       <h1>
         <FaUser /> Register
       </h1>
-
       <FormContainer>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
@@ -140,8 +139,8 @@ const Container = styled(motion.div)`
   position: relative;
   h1 {
     text-align: center;
-    font-size: 4rem;
-    padding: 4rem;
+    font-size: 2.5rem;
+    padding: 2rem;
     color: #23d997;
   }
 `
@@ -171,11 +170,11 @@ const FormContainer = styled(motion.div)`
     .form-group {
       position: relative;
       width: 100%;
-      height: 5rem;
-      font-size: 1.5rem;
+      height: 4rem;
+      font-size: 1.4rem;
       overflow: hidden;
       &:not(:last-child) {
-        margin-bottom: 5rem;
+        margin-bottom: 3rem;
       }
       input {
         width: 100%;
@@ -187,18 +186,19 @@ const FormContainer = styled(motion.div)`
       }
       button {
         width: 100%;
-        background: #23d997;
-        height: 5rem;
-        font-size: 1.8rem;
+        border: 1px solid #23d997;
+        background: transparent;
+        height: 4rem;
+        font-size: 1.4rem;
         text-transform: uppercase;
-        letter-spacing: 1rem;
+        font-weight: lighter;
         &:hover {
-          background: transparent;
+          background: #23d997;
         }
       }
       label {
         position: absolute;
-        bottom: 9px;
+        bottom: -6px;
         left: 0;
         width: 100%;
         height: 100%;
@@ -212,7 +212,7 @@ const FormContainer = styled(motion.div)`
           left: 0px;
           transition: all 0.3s ease;
           margin-left: 0.5rem;
-          color: black;
+          color: #3f474783;
           font-weight: normal;
         }
         &::after {
@@ -220,9 +220,9 @@ const FormContainer = styled(motion.div)`
           position: absolute;
           height: 100%;
           width: 100%;
-          border-bottom: 5px solid #5fd36a;
+          border-bottom: 5px solid #23d997;
           left: 0px;
-          bottom: -12px;
+          bottom: 3px;
           transform: translateX(-100%);
           transition: transform 0.3s ease;
         }
@@ -231,7 +231,7 @@ const FormContainer = styled(motion.div)`
   }
   .form-group input:focus + label .form-span,
   .form-group input:valid + label .form-span {
-    transform: translateY(-150%);
+    transform: translateY(-140%);
     font-size: 1.1rem;
     color: #23d997;
   }

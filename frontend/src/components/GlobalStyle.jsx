@@ -61,7 +61,7 @@ p{
 a {
   text-decoration: none;
   color: inherit;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
 }
 
 ul {
