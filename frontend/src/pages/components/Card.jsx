@@ -6,7 +6,6 @@ import UseScroll from '../../hooks/useScrolls'
 import { scrollReveal } from '../../animation'
 function CampgroundCard({ campground }) {
   const [element, controls, view] = UseScroll()
-  console.log(view)
   return (
     <Card ref={element}>
       <Image variants={scrollReveal} initial='hidden' animate={controls}>

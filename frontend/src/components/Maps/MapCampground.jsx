@@ -8,8 +8,8 @@ function MapCampground({ campground }) {
   const [viewport, setViewport] = useState({
     latitude: campground.latitude,
     longitude: campground.longitude,
-    width: '30vw',
-    height: '30vh',
+    width: '100%',
+    height: '100%',
     zoom: 12,
   })
   const [selectedCamp, setSelectedCamp] = useState(false)
@@ -65,7 +65,6 @@ const PopupStyled = styled.div`
   align-items: center; */
   h5 {
     margin-bottom: 4px;
-
   }
 `
 
