@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useParams, useLocation } from 'react-router-dom'
-import {
-  createReview,
-  setIsSuccess,
-  getReviews,
-} from '../../features/reviews/reviewsSlice'
+import { useParams } from 'react-router-dom'
+import { createReview } from '../../features/reviews/reviewsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Spinner from '../Spinner'
@@ -52,13 +48,6 @@ const FormReview = () => {
       toast.error(message)
     }
   }, [isError, message])
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(getReviews(id))
-    }
-    dispatch(setIsSuccess())
-  }, [isSuccess])
 
   if (isLoading) {
     return <Spinner />

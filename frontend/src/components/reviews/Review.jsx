@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaStar } from 'react-icons/fa'
-import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 const colors = {
   orange: '#FFBA5A',
@@ -10,7 +10,6 @@ const colors = {
 }
 
 const Review = ({ review }) => {
-  const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
   const stars = Array(5).fill(0)
   const rating = stars.map((rate, index) => (
@@ -28,14 +27,16 @@ const Review = ({ review }) => {
         </span>
         {review.author.username}
       </h4>
-      <h4>{rating}</h4>
+      <h4 className='stars'>{rating}</h4>
       <h4 className='review'>{review.review}</h4>
-      <Links>
-        <Link className='left' to='/contacts'>
-          Update
-        </Link>
-        <Link to='/contacts'>Delete</Link>
-      </Links>
+      {user && user._id === review.author._id ? (
+        <Links>
+          <Link className='left' to='/contacts'>
+            Update
+          </Link>
+          <Link to='/contacts'>Delete</Link>
+        </Links>
+      ) : null}
     </Container>
   )
 }
@@ -46,35 +47,43 @@ const Container = styled.div`
   width: 20%;
   margin-top: 2rem;
   border-radius: 5px;
-  height: 30vh;
+  min-height: 30vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  position: relative;
   margin-right: 1rem;
   .reviewer {
     text-align: center;
-    line-height: 1.9;
+    line-height: 1.7;
   }
   .review {
-    text-align: justify;
+    text-align: center;
     line-height: 1.6;
     background-color: #a9a9a9;
     padding: 1rem 0;
+    margin: 1rem 0;
     padding: 0 0.5rem;
     z-index: -10;
     width: 100%;
+  }
+  .stars {
+    margin: 1rem 0;
   }
 `
 const Links = styled.div`
   display: flex;
   width: 100%;
+  margin-bottom: 1rem;
   justify-content: space-evenly;
-  
+  position: absolute;
+  bottom: 0;
+
+
   a {
     font-size: 0.8rem;
-    transition: all .3s ease-out;
-    padding: .5rem 1rem;
+    transition: all 0.3s ease-out;
+    padding: 0.5rem 1rem;
     &:hover {
       background-color: #23d997;
       transform: translateY(-3px) scale(1.1);

@@ -28,10 +28,13 @@ function Header() {
           {/* <Line variants={pathname==='/campgrounds'?UnderLine:''} initial="hidden" animate="show"></Line> */}
         </li>
         {isLogged ? (
-          <li>
-            <button onClick={onLogout}>Logout</button>
-            {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
-          </li>
+          <>
+            <li onClick={onLogout} className='logout'>
+              Logout
+              {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
+            </li>
+            <li className='logout'>{user.username}</li>
+          </>
         ) : (
           <>
             <li>
@@ -70,6 +73,12 @@ const Nav = styled.nav`
     align-items: center;
     justify-content: space-evenly;
     flex: 1;
+    .logout {
+      text-decoration: none;
+      color: inherit;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
   }
   h1 {
     flex: 1;

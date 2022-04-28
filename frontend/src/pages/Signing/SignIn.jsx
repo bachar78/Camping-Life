@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
 import { toast } from 'react-toastify'
-import { login } from '../../features/auth/authSlice'
+import { login, reset } from '../../features/auth/authSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
@@ -24,6 +24,13 @@ const SignIn = () => {
   const onChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    dispatch(reset())
+  }, [isError, message])
+
   useEffect(() => {
     if (isLogged) {
       toast.success('You login in successfully')

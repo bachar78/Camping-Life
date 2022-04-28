@@ -12,7 +12,7 @@ import {
   getCampground,
   deleteCampground,
 } from '../features/campgrounds/campgroundsSlice'
-import { getReviews } from '../features/reviews/reviewsSlice'
+import { getReviews, setIsSuccess } from '../features/reviews/reviewsSlice'
 //import map
 import MapCampground from '../components/Maps/MapCampground'
 //import Reviews
@@ -27,7 +27,8 @@ const SingleCampground = () => {
   const { campground, isError, isLoading, message } = useSelector(
     (state) => state.campgrounds
   )
-  const { reviews } = useSelector((state) => state.reviews)
+  const { reviews, isSuccess } = useSelector((state) => state.reviews)
+  const { user, isLogged } = useSelector((state) => state.auth)
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -37,7 +38,11 @@ const SingleCampground = () => {
   useEffect(() => {
     dispatch(getCampground(id))
     dispatch(getReviews(id))
-  }, [id, dispatch])
+    if (isSuccess) {
+      dispatch(getReviews(id))
+    }
+    dispatch(setIsSuccess())
+  }, [id, dispatch, isSuccess])
 
   const onDelete = () => {
     dispatch(deleteCampground(id))
@@ -50,55 +55,68 @@ const SingleCampground = () => {
   return (
     campground && (
       <Container>
-        <Map>
-          <MapCampground campground={campground} />
-        </Map>
-        <Image>
-          {campground.images && (
-            <Carousel>
-              {campground.images.map((image, index) => (
-                <img key={index} src={image.url} />
-              ))}
-            </Carousel>
-          )}
-        </Image>
-
         <Title variants={fade}> {campground.title}</Title>
-        <Description>
-          {' '}
-          <span>Description</span> {campground.description}
-        </Description>
-        <Price variants={fade}>
-          {' '}
-          <span>Price:</span> ${campground.price}{' '}
-          <span className='night'>per Night</span>
-        </Price>
-        <Address variants={fade}>
-          <span>Address:</span> {campground.address} - {campground.zip_code}
-        </Address>
-        <ReviewForm>
-          <FormReview className='reviewForm' />
-        </ReviewForm>
-        <Buttons>
-          <motion.button
-            onClick={() =>
-              navigate(`/campgrounds/${campground._id}/edit`, {
-                state: campground,
-              })
-            }
-            variants={fade}>
-            Edit
-          </motion.button>
-          <motion.button variants={fade} onClick={onDelete}>
-            Delete
-          </motion.button>
-          <Link to='/campgrounds'>
-            <motion.button variants={fade}>Back</motion.button>
-          </Link>
-          <Link to='/contacts'>
-            <motion.button variants={fade}>Book</motion.button>
-          </Link>
-        </Buttons>
+        <ImagesMap>
+          <Image>
+            {campground.images && (
+              <Carousel className='carousel'>
+                {campground.images.map((image, index) => (
+                  <img key={index} src={image.url} />
+                ))}
+              </Carousel>
+            )}
+          </Image>
+          <MapButtons>
+            <Map>
+              <MapCampground campground={campground} />
+            </Map>
+            <Buttons>
+              {user && campground && user._id === campground.owner._id ? (
+                <motion.button
+                  onClick={() =>
+                    navigate(`/campgrounds/${campground._id}/edit`, {
+                      state: campground,
+                    })
+                  }
+                  variants={fade}>
+                  Edit
+                </motion.button>
+              ) : null}
+              {user && campground && user._id === campground.owner._id ? (
+                <motion.button variants={fade} onClick={onDelete}>
+                  Delete
+                </motion.button>
+              ) : null}
+              <Link to='/campgrounds'>
+                <motion.button variants={fade}>Back</motion.button>
+              </Link>
+              <Link to={isLogged ? '/contacts' : '/login'}>
+                <motion.button variants={fade}>Book</motion.button>
+              </Link>
+            </Buttons>
+          </MapButtons>
+        </ImagesMap>
+        <InfoButtons>
+          <Information>
+            <Description>
+              {' '}
+              <span>Description</span> {campground.description}
+            </Description>
+            <Price variants={fade}>
+              {' '}
+              <span>Price:</span> ${campground.price}{' '}
+              <span className='night'>per Night</span>
+            </Price>
+            <Address variants={fade}>
+              <span>Address:</span> {campground.address} - {campground.zip_code}
+            </Address>
+          </Information>
+        </InfoButtons>
+        {isLogged && (
+          <ReviewForm>
+            <FormReview className='reviewForm' />
+          </ReviewForm>
+        )}
         <Reviews>
           {reviews &&
             reviews.map((review) => (
@@ -113,69 +131,45 @@ const SingleCampground = () => {
 const Container = styled(motion.div)`
   padding: 8rem;
   padding-top: 0;
-  width: 70%;
+  width: 90%;
   margin: 0 auto;
-  column-gap: 1rem;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(11, 5vw);
   min-height: 90vh;
-  border: 3px solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
-const Map = styled(motion.div)`
-  grid-column: 1/4;
-  grid-row: 2/5;
+const Title = styled(motion.h1)`
+  align-self: center;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 2rem 0;
+`
+const ImagesMap = styled(motion.div)`
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  text-align: center;
 `
 const Image = styled(motion.div)`
-  grid-column: 4/7;
-  grid-row: 2/5;
+  height: 50vh;
+  width: 50%;
   img {
     height: 100%;
     width: 100%;
     object-fit: cover;
   }
 `
-const Title = styled(motion.h1)`
-  grid-column: 1/7;
-  grid-row: 1/2;
-  align-self: center;
-  text-align: center;
-  text-transform: uppercase;
-`
-const Description = styled(motion.p)`
-  grid-column: 1/4;
-  grid-row: 5/7;
-  align-self: center;
-  padding: 0;
-  line-height: 1.5;
-  text-align: justify;
-  padding: 1rem 0;
-`
-const Price = styled(motion.h1)`
-  grid-column: 4/7;
-  grid-row: 4/5;
-  font-size: 1.6rem;
-  align-self: center;
-  margin-left: 2rem;
-  text-align: center;
-  z-index: 15;
-  .night {
-    color: #aaa;
-    font-weight: lighter;
-    font-size: 1.1rem;
-  }
-`
-const Address = styled(Description)`
-  grid-row: 7/8;
-  text-align: justify;
-  padding: 1rem 0;
+
+const MapButtons = styled(motion.div)`
+  width: 45%;
+  height: 50vh;
+  margin: 0 auto;
 `
 const Buttons = styled(motion.div)`
+margin-top: 3rem;
   display: flex;
-  grid-row: 8/9;
-  grid-column: 1/4;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-start;
   button {
     font-weight: lighter;
     font-size: 1rem;
@@ -194,9 +188,48 @@ const Buttons = styled(motion.div)`
     }
   }
 `
+const Map = styled(motion.div)`
+  height: 30vh;
+  width: 100%;
+  .carousel {
+    height: 100%;
+    width: 100%;
+  }
+`
+
+const InfoButtons = styled(motion.div)`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
+
+const Information = styled(motion.div)`
+  width: 40%;
+  margin: 0 auto;
+`
+
+const Description = styled(motion.p)`
+  line-height: 1.5;
+  text-align: justify;
+  margin: 0rem;
+`
+const Price = styled(motion.h1)`
+  font-size: 1.6rem;
+  z-index: 15;
+  .night {
+    color: #aaa;
+    font-weight: lighter;
+    font-size: 1.1rem;
+  }
+`
+const Address = styled(Description)`
+  padding: 0rem 0rem;
+  color: #ccc;
+  font-size: 1.3rem;
+  line-height: 1.9;
+`
+
 const ReviewForm = styled(motion.div)`
-  grid-row: 5/9;
-  grid-column: 4/7;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -204,8 +237,6 @@ const ReviewForm = styled(motion.div)`
 `
 
 const Reviews = styled(motion.div)`
-  grid-column: 1/7;
-  grid-row: 9/12;
   height: 100%;
   display: flex;
   justify-content: center;

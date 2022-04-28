@@ -16,6 +16,8 @@ const AllCampgrounds = () => {
   const { campgrounds, isError, isSuccess } = useSelector(
     (state) => state.campgrounds
   )
+  const { isLogged } = useSelector((state) => state.auth)
+
   useEffect(() => {
     if (isError) {
       toast.error('Cant find the campgrounds')
@@ -40,9 +42,11 @@ const AllCampgrounds = () => {
       <Map>
         <MapCluster data={campgrounds} />
       </Map>
-      <Link to='/new'>
-        <motion.button>Add Campground</motion.button>
-      </Link>
+      {isLogged ? (
+        <Link to='/new'>
+          <motion.button>Add Campground</motion.button>
+        </Link>
+      ) : null}
       <ContainerCampground>
         {campgrounds &&
           campgrounds.map((campground, index) => (

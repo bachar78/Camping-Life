@@ -2,26 +2,25 @@ const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 
 const registerUser = asyncHandler(async (req, res, next) => {
-  try {
-    const { email, username, password } = req.body
-    if (!username || !email || !password) {
-      res.status(400)
-      throw new Error('Please fill all required fields')
-    }
-    const user = new User({ email, username })
-    const newUser = await User.register(user, password)
-    if (!newUser) {
-      res.status(401)
-      throw new Error("User can't be created")
-    }
-    req.logIn(newUser, (err) => {
-      if (err) return next(err)
-      res.json(newUser)
-    })
-  } catch (e) {
+  const { email, username, password } = req.body
+  if (!username || !email || !password) {
     res.status(400)
-    throw new Error("Can't register the User")
+    throw new Error('Please fill all required fields')
   }
+  const userExist = User.findOne({ email })
+  if (userExist) {
+    throw new Error("A User exists with the same email, change email!!")
+  }
+  const user = new User({ email, username })
+  const newUser = await User.register(user, password)
+  if (!newUser) {
+    res.status(401)
+    throw new Error("User can't be created")
+  }
+  req.logIn(newUser, (err) => {
+    if (err) return next(err)
+    res.json(newUser)
+  })
 })
 
 const userLogin = asyncHandler(async (req, res) => {
