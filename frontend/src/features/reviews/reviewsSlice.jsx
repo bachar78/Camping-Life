@@ -95,7 +95,9 @@ export const reviewSlice = createSlice({
   name: 'reviews',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    setIsSuccess: (state) => {
+      state.isSuccess = false
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -104,7 +106,6 @@ export const reviewSlice = createSlice({
       })
       .addCase(getReviews.fulfilled, (state, action) => {
         state.isLoading = false
-        state.isSuccess = true
         state.reviews = action.payload
       })
       .addCase(getReviews.rejected, (state, action) => {
@@ -159,6 +160,6 @@ export const reviewSlice = createSlice({
   },
 })
 
-export const { reset } = reviewSlice.actions
+export const { setIsSuccess } = reviewSlice.actions
 
 export default reviewSlice.reducer

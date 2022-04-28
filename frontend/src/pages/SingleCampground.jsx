@@ -18,6 +18,7 @@ import MapCampground from '../components/Maps/MapCampground'
 //import Reviews
 import Review from '../components/reviews/Review'
 import FormReview from '../components/reviews/FormReview'
+import Carousel from 'react-elastic-carousel'
 
 const SingleCampground = () => {
   const navigate = useNavigate()

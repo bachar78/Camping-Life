@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useParams, useLocation } from 'react-router-dom'
-import { createReview } from '../../features/reviews/reviewsSlice'
+import {
+  createReview,
+  setIsSuccess,
+  getReviews,
+} from '../../features/reviews/reviewsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Spinner from '../Spinner'
@@ -24,7 +28,9 @@ const FormReview = () => {
   const onChange = (e) => {
     setReviewData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
-  const { isLoading, isError, message } = useSelector((state) => state.reviews)
+  const { isLoading, isError, message, isSuccess } = useSelector(
+    (state) => state.reviews
+  )
 
   const handleHover = (value) => {
     setReviewData((prev) => ({ ...prev, rating: value }))
@@ -46,6 +52,13 @@ const FormReview = () => {
       toast.error(message)
     }
   }, [isError, message])
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(getReviews(id))
+    }
+    dispatch(setIsSuccess())
+  }, [isSuccess])
 
   if (isLoading) {
     return <Spinner />
@@ -96,13 +109,7 @@ const FormReview = () => {
               value={review}
               onChange={onChange}
             />
-            <button
-              onClick={() => {
-                window.location.reload()
-              }}
-              type='submit'>
-              Click
-            </button>
+            <button type='submit'>Click</button>
           </Form>
         </motion.div>
       )}
