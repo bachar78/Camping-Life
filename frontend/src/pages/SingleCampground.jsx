@@ -54,8 +54,15 @@ const SingleCampground = () => {
           <MapCampground campground={campground} />
         </Map>
         <Image>
-          <img src={campground.images && campground.images[0].url} alt='' />
+          {campground.images && (
+            <Carousel>
+              {campground.images.map((image, index) => (
+                <img key={index} src={image.url} />
+              ))}
+            </Carousel>
+          )}
         </Image>
+
         <Title variants={fade}> {campground.title}</Title>
         <Description>
           {' '}
@@ -122,7 +129,6 @@ const Map = styled(motion.div)`
 const Image = styled(motion.div)`
   grid-column: 4/7;
   grid-row: 2/5;
-  border: 1px solid #23d997;
   img {
     height: 100%;
     width: 100%;
@@ -151,6 +157,8 @@ const Price = styled(motion.h1)`
   font-size: 1.6rem;
   align-self: center;
   margin-left: 2rem;
+  text-align: center;
+  z-index: 15;
   .night {
     color: #aaa;
     font-weight: lighter;
