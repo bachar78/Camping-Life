@@ -36,7 +36,7 @@ const HomePage = () => {
             experience and comment on others!
           </motion.p>
           <Link to='/contacts'>
-            <motion.button variants={fade}>Contact Us</motion.button>
+            <motion.button className='contact' variants={fade}>Contact Us</motion.button>
           </Link>
         </Description>
         <Image>
@@ -64,13 +64,20 @@ const Home = styled(motion.div)`
   justify-content: space-between;
   color: white;
   padding: 4rem;
+  
 `
 const Description = styled.div`
   flex: 1;
   z-index: 2;
   padding-right: 5rem;
+  
   h2 {
     font-weight: lighter;
+  }
+  p {
+    padding: 4rem 0;
+  }
+  .contact {
   }
 `
 const Image = styled(motion.div)`

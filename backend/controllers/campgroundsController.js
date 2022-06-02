@@ -112,11 +112,11 @@ const updateCampground = asyncHandler(async (req, res) => {
 
   const campground = await Campground.findById(id)
   if (!campground) {
-    res.status(401)
+    res.status(404)
     throw new Error('Campground not found')
   }
   if (campground.owner.toString() !== req.user._id.toString()) {
-    res.status(404)
+    res.status(401)
     throw new Error('You are not authorized to Edit this campground')
   }
   if (req.body.zip_code !== campground.zip_code) {

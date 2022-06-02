@@ -62,7 +62,7 @@ const Contacts = styled(motion.div)`
     font-weight: lighter;
   }
 `
-const Offices = styled(motion.dev)`
+const Offices = styled(motion.div)`
   overflow: hidden;
   display: grid;
   padding: 2rem;

@@ -14,7 +14,6 @@ const colors = {
   grey: '#a9a9a9',
 }
 const FormReview = () => {
-  const [isOpen, setIsOpen] = useState(false)
   const stars = Array(5).fill(0)
   const [reviewData, setReviewData] = useState({ review: '', rating: 0 })
   const [hoverValue, setHoverValue] = useState(null)
@@ -24,7 +23,7 @@ const FormReview = () => {
   const onChange = (e) => {
     setReviewData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
-  const { isLoading, isError, message, isSuccess } = useSelector(
+  const { isLoading, isError, message} = useSelector(
     (state) => state.reviews
   )
 
@@ -53,20 +52,16 @@ const FormReview = () => {
     return <Spinner />
   }
   return (
-    <Container transition={{ layout: { duration: 1, type: 'spring' } }} layout>
+    <Container>
       <motion.h1 layout='position'>
-        Leave a Review ?{' '}
-        <span onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? 'Close' : 'Click'}
-        </span>{' '}
+        Leave a Review
       </motion.h1>
-      {isOpen && (
         <motion.div
           exit='exit'
           variants={pageAnimation}
           initial='hidden'
           animate='show'>
-          <motion.div className='stars' layout>
+          <motion.div className='stars'>
             {stars.map((_, index) => {
               return (
                 <FaStar
@@ -101,7 +96,6 @@ const FormReview = () => {
             <button type='submit'>Click</button>
           </Form>
         </motion.div>
-      )}
     </Container>
   )
 }
@@ -135,6 +129,7 @@ const Container = styled(motion.div)`
   }
   .stars {
     margin-bottom: 1rem;
+    text-align: center;
   }
 `
 

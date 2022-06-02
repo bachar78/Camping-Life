@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaStar } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { motion } from 'framer-motion'
 
 const colors = {
   orange: '#FFBA5A',
@@ -41,11 +42,10 @@ const Review = ({ review }) => {
   )
 }
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   border: 1px solid #23d997;
   padding: 1rem 0;
-  width: 20%;
-  margin-top: 2rem;
+  min-width: 250px;
   border-radius: 5px;
   min-height: 30vh;
   display: flex;
@@ -60,8 +60,8 @@ const Container = styled.div`
   .review {
     text-align: center;
     line-height: 1.6;
-    background-color: #a9a9a9;
-    padding: 1rem 0;
+    background-color: rgba(169, 169, 169, .4);
+    padding: 1rem;
     margin: 1rem 0;
     padding: 0 0.5rem;
     z-index: -10;
@@ -74,7 +74,7 @@ const Container = styled.div`
 const Links = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: .1rem;
   justify-content: space-evenly;
   position: absolute;
   bottom: 0;

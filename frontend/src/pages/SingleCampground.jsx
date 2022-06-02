@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -19,8 +19,11 @@ import MapCampground from '../components/Maps/MapCampground'
 import Review from '../components/reviews/Review'
 import FormReview from '../components/reviews/FormReview'
 import Carousel from 'react-elastic-carousel'
+import reviewService from '../features/reviews/reviewService'
 
 const SingleCampground = () => {
+  const [width, setWidth] = useState(0)
+  const carousel = useRef()
   const navigate = useNavigate()
   const { id } = useParams()
   const dispatch = useDispatch()
@@ -44,6 +47,8 @@ const SingleCampground = () => {
     dispatch(setIsSuccess())
   }, [id, dispatch, isSuccess])
 
+ 
+  
   const onDelete = () => {
     dispatch(deleteCampground(id))
     toast.success('Campground deleted')
@@ -55,7 +60,10 @@ const SingleCampground = () => {
   return (
     campground && (
       <Container>
-        <Title variants={fade}> {campground.title}</Title>
+        <Title variants={fade}>
+          {' '}
+          <span>CAMPGROUND: </span> {campground.title}
+        </Title>
         <ImagesMap>
           <Image>
             {campground.images && (
@@ -96,7 +104,12 @@ const SingleCampground = () => {
             </Buttons>
           </MapButtons>
         </ImagesMap>
-        <InfoButtons>
+        <InfoForm>
+          {isLogged && (
+            <ReviewForm>
+              <FormReview className='reviewForm' />
+            </ReviewForm>
+          )}
           <Information>
             <Description>
               {' '}
@@ -105,23 +118,25 @@ const SingleCampground = () => {
             <Price variants={fade}>
               {' '}
               <span>Price:</span> ${campground.price}{' '}
-              <span className='night'>per Night</span>
+              <span className='night'>For Night</span>
             </Price>
             <Address variants={fade}>
               <span>Address:</span> {campground.address} - {campground.zip_code}
             </Address>
           </Information>
-        </InfoButtons>
-        {isLogged && (
-          <ReviewForm>
-            <FormReview className='reviewForm' />
-          </ReviewForm>
-        )}
-        <Reviews>
-          {reviews &&
-            reviews.map((review) => (
-              <Review key={review._id} review={review} />
-            ))}
+        </InfoForm>
+
+        <Reviews ref={carousel}>
+          <InnerReviews
+            drag='x'
+            dragConstraints={{
+              right: 0,
+            }}>
+            {reviews &&
+              reviews.map((review) => (
+                <Review key={review._id} review={review} />
+              ))}
+          </InnerReviews>
         </Reviews>
       </Container>
     )
@@ -131,8 +146,7 @@ const SingleCampground = () => {
 const Container = styled(motion.div)`
   padding: 8rem;
   padding-top: 0;
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
   min-height: 90vh;
   display: flex;
   flex-direction: column;
@@ -142,7 +156,7 @@ const Title = styled(motion.h1)`
   align-self: center;
   text-align: center;
   text-transform: uppercase;
-  margin: 2rem 0;
+  margin: 4rem 0;
 `
 const ImagesMap = styled(motion.div)`
   height: 50vh;
@@ -153,6 +167,10 @@ const ImagesMap = styled(motion.div)`
 const Image = styled(motion.div)`
   height: 50vh;
   width: 50%;
+  .carousel {
+    height: 100%;
+    width: 100%;
+  }
   img {
     height: 100%;
     width: 100%;
@@ -166,7 +184,7 @@ const MapButtons = styled(motion.div)`
   margin: 0 auto;
 `
 const Buttons = styled(motion.div)`
-margin-top: 3rem;
+  margin-top: 1.5rem;
   display: flex;
   justify-content: space-evenly;
   align-items: flex-start;
@@ -189,32 +207,40 @@ margin-top: 3rem;
   }
 `
 const Map = styled(motion.div)`
-  height: 30vh;
+  height: 45vh;
   width: 100%;
-  .carousel {
-    height: 100%;
-    width: 100%;
-  }
 `
 
-const InfoButtons = styled(motion.div)`
+const InfoForm = styled(motion.div)`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 `
-
+const ReviewForm = styled(motion.div)`
+  width: 50%;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
 const Information = styled(motion.div)`
-  width: 40%;
-  margin: 0 auto;
+  width: 50%;
+  padding: 4rem 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 
 const Description = styled(motion.p)`
   line-height: 1.5;
   text-align: justify;
-  margin: 0rem;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
 `
 const Price = styled(motion.h1)`
-  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
   z-index: 15;
   .night {
     color: #aaa;
@@ -225,22 +251,17 @@ const Price = styled(motion.h1)`
 const Address = styled(Description)`
   padding: 0rem 0rem;
   color: #ccc;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   line-height: 1.9;
 `
 
-const ReviewForm = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const Reviews = styled(motion.div)`
+  cursor: grab;
+  margin: 0 30%;
+  overflow: hidden;
 `
 
-const Reviews = styled(motion.div)`
-  height: 100%;
+const InnerReviews = styled(motion.div)`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
 `
 export default SingleCampground
