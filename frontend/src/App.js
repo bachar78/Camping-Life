@@ -24,7 +24,7 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUser()) 
-  }, [])
+  }, [dispatch])
   return (
     <Container>
       <GlobalStyle />

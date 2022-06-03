@@ -25,11 +25,8 @@ const SignIn = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
   useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
     dispatch(reset())
-  }, [isError, message])
+  }, [])
 
   useEffect(() => {
     if (isLogged) {

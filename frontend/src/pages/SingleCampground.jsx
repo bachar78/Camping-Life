@@ -47,8 +47,6 @@ const SingleCampground = () => {
     dispatch(setIsSuccess())
   }, [id, dispatch, isSuccess])
 
- 
-  
   const onDelete = () => {
     dispatch(deleteCampground(id))
     toast.success('Campground deleted')
@@ -69,7 +67,7 @@ const SingleCampground = () => {
             {campground.images && (
               <Carousel className='carousel'>
                 {campground.images.map((image, index) => (
-                  <img key={index} src={image.url} />
+                  <img key={index} src={image.url} alt='camp'/>
                 ))}
               </Carousel>
             )}
@@ -86,7 +84,8 @@ const SingleCampground = () => {
                       state: campground,
                     })
                   }
-                  variants={fade}>
+                  variants={fade}
+                >
                   Edit
                 </motion.button>
               ) : null}
@@ -131,7 +130,8 @@ const SingleCampground = () => {
             drag='x'
             dragConstraints={{
               right: 0,
-            }}>
+            }}
+          >
             {reviews &&
               reviews.map((review) => (
                 <Review key={review._id} review={review} />

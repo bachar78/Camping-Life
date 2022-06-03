@@ -1,11 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import UseScroll from '../../hooks/useScrolls'
 import { scrollReveal } from '../../animation'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCampground } from '../../features/campgrounds/campgroundsSlice'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 function CampgroundCard({ campground }) {
   const [element, controls, view] = UseScroll()
+  const dispatch = useDispatch()
+  const { isSuccess, isError, message } = useSelector(
+    (state) => state.campgrounds
+  )
+  const navigate = useNavigate()
+  const onDetails = () => {
+    dispatch(getCampground(campground._id))
+    if (isError) {
+      toast.error(message)
+    }
+    if (isSuccess) {
+      navigate(`/campgrounds/${campground._id}`)
+    }
+  }
+
   return (
     <Card ref={element}>
       <Image variants={scrollReveal} initial='hidden' animate={controls}>
@@ -18,9 +36,7 @@ function CampgroundCard({ campground }) {
         <h1 style={{ fontSize: '1.8rem' }}>{campground.title}</h1>
         <h3>{campground.address}</h3>
         <h2>Price: ${campground.price}</h2>
-        <Link to={`/campgrounds/${campground._id}`}>
-          <button>view details</button>
-        </Link>
+        <button onClick={onDetails}>view details</button>
       </Description>
     </Card>
   )
