@@ -45,7 +45,7 @@ const Review = ({ review }) => {
 const Container = styled(motion.div)`
   border: 1px solid #23d997;
   padding: 1rem 0;
-  min-width: 250px;
+  width: 250px;
   border-radius: 5px;
   min-height: 30vh;
   display: flex;

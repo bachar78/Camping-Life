@@ -15,7 +15,7 @@ const SignIn = () => {
     password: '',
   })
   const dispatch = useDispatch()
-  const { user, isLoading, isError, isLogged, message } = useSelector(
+  const { isLoading, isError, isLogged, message } = useSelector(
     (state) => state.auth
   )
   const navigate = useNavigate()
@@ -26,14 +26,14 @@ const SignIn = () => {
   }
   useEffect(() => {
     dispatch(reset())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (isLogged) {
       toast.success('You login in successfully')
       navigate('/')
     }
-  }, [isLogged])
+  }, [isLogged, navigate])
   const onSubmit = (e) => {
     e.preventDefault()
     if (!username || !password) {

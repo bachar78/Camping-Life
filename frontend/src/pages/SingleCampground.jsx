@@ -19,11 +19,16 @@ import MapCampground from '../components/Maps/MapCampground'
 import Review from '../components/reviews/Review'
 import FormReview from '../components/reviews/FormReview'
 import Carousel from 'react-elastic-carousel'
-import reviewService from '../features/reviews/reviewService'
 
 const SingleCampground = () => {
-  const [width, setWidth] = useState(0)
-  const carousel = useRef()
+  const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 500, itemsToShow: 2 },
+    { width: 768, itemsToShow: 3 },
+    { width: 1200, itemsToShow: 5 },
+    {width: 1500, itemsToShow: 6}
+  ]
+
   const navigate = useNavigate()
   const { id } = useParams()
   const dispatch = useDispatch()
@@ -67,7 +72,7 @@ const SingleCampground = () => {
             {campground.images && (
               <Carousel className='carousel'>
                 {campground.images.map((image, index) => (
-                  <img key={index} src={image.url} alt='camp'/>
+                  <img key={index} src={image.url} alt='camp' />
                 ))}
               </Carousel>
             )}
@@ -124,19 +129,14 @@ const SingleCampground = () => {
             </Address>
           </Information>
         </InfoForm>
-
-        <Reviews ref={carousel}>
-          <InnerReviews
-            drag='x'
-            dragConstraints={{
-              right: 0,
-            }}
-          >
-            {reviews &&
-              reviews.map((review) => (
+        <Reviews>
+          {reviews && (
+            <Carousel breakPoints={breakPoints}>
+              {reviews.map((review) => (
                 <Review key={review._id} review={review} />
               ))}
-          </InnerReviews>
+            </Carousel>
+          )}
         </Reviews>
       </Container>
     )
@@ -256,12 +256,7 @@ const Address = styled(Description)`
 `
 
 const Reviews = styled(motion.div)`
-  cursor: grab;
-  margin: 0 30%;
-  overflow: hidden;
+  width: 100%;
 `
 
-const InnerReviews = styled(motion.div)`
-  display: flex;
-`
 export default SingleCampground
