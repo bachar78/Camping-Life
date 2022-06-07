@@ -14,7 +14,7 @@ const passport = require('passport')
 const localStrategy = require('passport-local')
 const User = require('./models/userModel')
 const MongoDBStore = require('connect-mongo')
-
+const path = require('path')
 //connect to database
 connectDB()
 const app = express()
@@ -66,7 +66,19 @@ app.get('/', (req, res) => {
 app.use('/api/campgrounds', campgroundsRoutes)
 app.use('/api/users', userRoutes)
 // app.use('/api/reviews', reviewsRoutes)
-
+//Serve Frontend
+if (process.env.NODE_ENV === 'production') {
+  //Set build folder as static
+  app.use(express.static(path.join(__dirname, '../frontend/build')))
+  app.get('*', (req, res) => {
+    res.sendFile(__dirname, '../', 'frontend', 'build', 'index.html')
+  })
+} else {
+  //Home Route
+  app.get('/', (req, res) => {
+    res.status(200).send({ message: 'Welcome to the task manager application' })
+  })
+}
 //Error Handler middleware
 app.use(errorHandler)
 

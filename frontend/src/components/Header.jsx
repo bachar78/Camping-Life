@@ -11,6 +11,7 @@ import { toast } from 'react-toastify'
 function Header() {
   const dispatch = useDispatch()
   const { user, isLogged } = useSelector((state) => state.auth)
+  console.log(isLogged)
   const onLogout = () => {
     dispatch(logout())
   }

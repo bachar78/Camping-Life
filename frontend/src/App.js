@@ -21,10 +21,10 @@ import { getUser } from './features/auth/authSlice'
 
 function App() {
   let location = useLocation()
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getUser()) 
-  }, [dispatch])
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   dispatch(getUser()) 
+  // }, [dispatch])
   return (
     <Container>
       <GlobalStyle />

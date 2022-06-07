@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
 import authService from './authService'
 
+// Get member from localstorage
+const user = JSON.parse(localStorage.getItem('user'))
 const initialState = {
-  user: null,
+  user: user ? user : null,
   isError: false,
   isLogged: false,
   isLoading: false,
@@ -109,7 +110,7 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
-        state.isLogged = false
+        state.isLogged = true
         state.message = action.payload
         state.member = null
       })

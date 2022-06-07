@@ -30,7 +30,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (isLogged) {
-      navigate(-1)
+      navigate('/')
     }
   }, [isLogged, navigate])
   const onSubmit = (e) => {
