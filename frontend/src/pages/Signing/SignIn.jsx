@@ -30,8 +30,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (isLogged) {
-      toast.success('You login in successfully')
-      navigate('/')
+      navigate(-1)
     }
   }, [isLogged, navigate])
   const onSubmit = (e) => {
@@ -114,6 +113,12 @@ const Image = styled(motion.div)`
     height: 30vh;
     object-fit: cover;
   }
+  @media (max-width: 900px) {
+    width: 70%;
+  }
+  @media (max-width: 600px) {
+    width: 85%;
+  }
 `
 
 const FormContainer = styled(motion.div)`
@@ -193,6 +198,12 @@ const FormContainer = styled(motion.div)`
   .form-group input:focus + label::after,
   .form-group input:valid + label::after {
     transform: translateX(0%);
+  }
+  @media (max-width: 900px) {
+    width: 70%;
+  }
+  @media (max-width: 600px) {
+    width: 85%;
   }
 `
 

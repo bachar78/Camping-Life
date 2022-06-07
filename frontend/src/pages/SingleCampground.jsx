@@ -151,21 +151,34 @@ const Container = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media (max-width: 900px) {
+    padding: 3rem;
+    padding-top: 0;
+  }
 `
 const Title = styled(motion.h1)`
   align-self: center;
   text-align: center;
   text-transform: uppercase;
-  margin: 4rem 0;
+  margin: 3rem 0;
 `
 const ImagesMap = styled(motion.div)`
-  height: 50vh;
+  height: 40vh;
   width: 100%;
   display: flex;
   text-align: center;
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80vh;
+  }
+  @media (max-width: 600px) {
+    justify-content: space-evenly;
+    height: 60vh;
+  }
 `
 const Image = styled(motion.div)`
-  height: 50vh;
+  height: 100%;
   width: 50%;
   .carousel {
     height: 100%;
@@ -176,12 +189,27 @@ const Image = styled(motion.div)`
     width: 100%;
     object-fit: cover;
   }
+  @media (max-width: 1200px) {
+    height: 50%;
+    width: 100%;
+  }
+  @media (max-width: 600px) {
+    justify-content: space-evenly;
+    height: 35%;
+  }
 `
 
 const MapButtons = styled(motion.div)`
   width: 45%;
-  height: 50vh;
+  height: 100%;
   margin: 0 auto;
+  @media (max-width: 1200px) {
+    height: 40%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
 `
 const Buttons = styled(motion.div)`
   margin-top: 1.5rem;
@@ -207,7 +235,7 @@ const Buttons = styled(motion.div)`
   }
 `
 const Map = styled(motion.div)`
-  height: 45vh;
+  height: 50%;
   width: 100%;
 `
 
@@ -215,6 +243,9 @@ const InfoForm = styled(motion.div)`
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `
 const ReviewForm = styled(motion.div)`
   width: 50%;
@@ -223,13 +254,29 @@ const ReviewForm = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 25vh;
+    margin: 2rem 0;
+    justify-content: space-between;
+  }
 `
 const Information = styled(motion.div)`
   width: 50%;
-  padding: 4rem 8rem;
+  padding: 2rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media (max-width: 1200px) {
+    padding: 1rem 1.5rem;
+  }
+  @media (max-width: 900px) {
+    padding: 1rem 0.5rem;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    margin: 2rem 0;
+  }
 `
 
 const Description = styled(motion.p)`

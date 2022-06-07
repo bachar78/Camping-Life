@@ -22,7 +22,7 @@ html {
     &::-webkit-scrollbar-track {
     background: white;
   }
-
+}
 button {
     font-weight: bold;
     font-size: 1.5rem;
@@ -66,7 +66,16 @@ a {
 ul {
   list-style: none;
 }
-
+ @media (max-width: 1200px) {
+        html {
+            font-size: 80%;
+        }
+    }
+ @media (max-width: 900px) {
+        html {
+            font-size: 70%;
+        }
+    }
 `
 
 export default GlobalStyle

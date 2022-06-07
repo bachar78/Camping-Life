@@ -130,6 +130,16 @@ const Description = styled(motion.div)`
     text-transform: uppercase;
     margin-bottom: 2rem;
   }
+  @media (max-width: 750px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    button {
+      width: 70%;
+    }
+  }
 `
 
 export default CampgroundCard

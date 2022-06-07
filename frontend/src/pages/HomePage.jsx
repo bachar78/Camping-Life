@@ -64,30 +64,43 @@ const Home = styled(motion.div)`
   justify-content: space-between;
   color: white;
   padding: 4rem;
-  
+  @media (max-width: 600px) {
+   flex-direction: column
+   ;
+  }
 `
 const Description = styled.div`
   flex: 1;
   z-index: 2;
   padding-right: 5rem;
-  
   h2 {
     font-weight: lighter;
   }
   p {
     padding: 4rem 0;
   }
-  .contact {
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 4rem;
   }
 `
 const Image = styled(motion.div)`
-  /* flex: 1; */
+  flex: 1;
   overflow: hidden;
   z-index: 2;
   img {
     width: 100%;
     height: 80vh;
     object-fit: cover;
+  }
+  @media (max-width: 900px) {
+    img {
+      width: 80%;
+      height: 60vh;
+      object-fit: cover;
+    }
   }
 `
 const Hide = styled.div`

@@ -24,7 +24,7 @@ function Header() {
       </h1>
       <ul>
         <li>
-          <Link to='/campgrounds'>Campgrounds</Link>
+          <Link to='/campgrounds'>See All</Link>
           {/* <Line variants={pathname==='/campgrounds'?UnderLine:''} initial="hidden" animate="show"></Line> */}
         </li>
         {isLogged ? (
@@ -38,7 +38,7 @@ function Header() {
         ) : (
           <>
             <li>
-              <Link to='/register'>Register</Link>
+              <Link to='/register'>Regist</Link>
               {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
             </li>
             <li>
@@ -67,6 +67,14 @@ const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 10;
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    padding: 1rem 0;
+    ul {
+      width: 100%;
+      margin-top: 1rem 
+    }
+  }
   ul {
     display: flex;
     list-style: none;

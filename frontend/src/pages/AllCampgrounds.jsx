@@ -8,7 +8,7 @@ import CampgroundCard from './components/Card'
 
 //framer motion
 import { motion } from 'framer-motion'
-import { pageAnimation, SliderContainer } from '../animation'
+import { pageAnimation} from '../animation'
 import { toast } from 'react-toastify'
 
 const AllCampgrounds = () => {
@@ -49,7 +49,7 @@ const AllCampgrounds = () => {
       ) : null}
       <ContainerCampground>
         {campgrounds &&
-          campgrounds.map((campground, index) => (
+          campgrounds.map((campground) => (
             <CampgroundCard campground={campground} key={campground._id} />
           ))}
       </ContainerCampground>
@@ -88,5 +88,6 @@ const Map = styled(motion.div)`
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+  width: 100%;
 `
 export default AllCampgrounds

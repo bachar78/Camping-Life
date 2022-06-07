@@ -140,7 +140,7 @@ const Container = styled(motion.div)`
   h1 {
     text-align: center;
     font-size: 2.5rem;
-    padding: 2rem;
+    padding: 4rem;
     color: #23d997;
   }
 `
@@ -238,6 +238,12 @@ const FormContainer = styled(motion.div)`
   .form-group input:focus + label::after,
   .form-group input:valid + label::after {
     transform: translateX(0%);
+  }
+  @media (max-width: 900px) {
+    width: 70%;
+  }
+  @media (max-width: 600px) {
+    width: 85%;
   }
 `
 export default SignUp
