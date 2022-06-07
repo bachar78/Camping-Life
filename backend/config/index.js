@@ -5,7 +5,9 @@ const data = require('./data')
 const { places, descriptors, images } = require('./seedHelpers')
 
 //connect Mongo
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(
+  'mongodb+srv://bachar78:BrasiliA2018@react-camping.5ylye.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+)
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error'))
 db.once('open', () => {
