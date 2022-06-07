@@ -36,7 +36,7 @@ store.on('error', function (e) {
 })
 const sessionConfig = {
   store,
-  name: 'CampLife',
+  name: 'session',
   secret: process.env.EXPRESS_SESSION,
   resave: false,
   saveUninitialized: true,
