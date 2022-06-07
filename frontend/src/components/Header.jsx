@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { GiCampingTent } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router'
-import { motion } from 'framer-motion'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../features/auth/authSlice'
 import { toast } from 'react-toastify'
@@ -11,7 +9,6 @@ import { toast } from 'react-toastify'
 function Header() {
   const dispatch = useDispatch()
   const { user, isLogged } = useSelector((state) => state.auth)
-  console.log(isLogged)
   const onLogout = () => {
     dispatch(logout())
   }
