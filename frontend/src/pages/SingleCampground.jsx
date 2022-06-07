@@ -213,6 +213,7 @@ const MapButtons = styled(motion.div)`
 `
 const Buttons = styled(motion.div)`
   margin-top: 1.5rem;
+  height: 30%;
   display: flex;
   justify-content: space-evenly;
   align-items: flex-start;
@@ -235,7 +236,7 @@ const Buttons = styled(motion.div)`
   }
 `
 const Map = styled(motion.div)`
-  height: 50%;
+  height: 70%;
   width: 100%;
 `
 
