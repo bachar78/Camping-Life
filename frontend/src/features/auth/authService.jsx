@@ -25,17 +25,17 @@ const logout = async () => {
   return data
 }
 
-//Get a user
-const getUser = async () => {
-  const { data } = await axios.get(`${API_URL}/user`)
-  return data
-}
+// //Get a user
+// const getUser = async () => {
+//   const { data } = await axios.get(`${API_URL}/user`)
+//   return data
+// }
 
 const authService = {
   register,
   logout,
   login,
-  getUser,
+  // getUser,
 }
 
 export default authService
