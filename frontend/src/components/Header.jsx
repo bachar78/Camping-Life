@@ -4,7 +4,7 @@ import { GiCampingTent } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../features/auth/authSlice'
-import { toast } from 'react-toastify'
+
 
 function Header() {
   const dispatch = useDispatch()
@@ -25,7 +25,7 @@ function Header() {
           <Link to='/campgrounds'>See All</Link>
           {/* <Line variants={pathname==='/campgrounds'?UnderLine:''} initial="hidden" animate="show"></Line> */}
         </li>
-        {isLogged ? (
+        {user ? (
           <>
             <li onClick={onLogout} className='logout'>
               Logout

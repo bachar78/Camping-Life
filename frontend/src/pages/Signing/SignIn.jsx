@@ -15,7 +15,7 @@ const SignIn = () => {
     password: '',
   })
   const dispatch = useDispatch()
-  const { isLoading, isError, isLogged, message } = useSelector(
+  const { user, isLoading, isError, message } = useSelector(
     (state) => state.auth
   )
   const navigate = useNavigate()
@@ -29,10 +29,10 @@ const SignIn = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (isLogged) {
+    if (user) {
       navigate('/')
     }
-  }, [isLogged, navigate])
+  }, [user, navigate])
   const onSubmit = (e) => {
     e.preventDefault()
     if (!username || !password) {

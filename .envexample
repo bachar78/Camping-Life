@@ -1,0 +1,10 @@
+NODE_ENV = development
+PORT = 8800
+MONGO_URI = mongodb+srv://bachar78:BrasiliA2018@react-camping.5ylye.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+JWT_SECRET = Shams2015
+EXPRESS_SESSION = Shams2020
+
+
+CLOUDINARY_NAME=dlvtyysmz
+CLOUDINARY_API_KEY=295153957124833
+CLOUDINARY_API_SECRET=qcO0jrL93cdDmHzsTuFk-BwXkX0

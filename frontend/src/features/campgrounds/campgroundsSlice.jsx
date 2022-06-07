@@ -3,7 +3,7 @@ import campgroundsService from './campgroundsService'
 
 const initialState = {
   campgrounds: [],
-  campground: {},
+  campground: null,
   isError: false,
   isSuccess: false,
   isLoading: false,

@@ -6,7 +6,6 @@ const user = JSON.parse(localStorage.getItem('user'))
 const initialState = {
   user: user ? user : null,
   isError: false,
-  isLogged: false,
   isLoading: false,
   message: '',
 }
@@ -89,13 +88,11 @@ export const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false
-        state.isLogged = true
         state.user = action.payload
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
-        state.isLogged = false
         state.message = action.payload
         state.member = null
       })
@@ -104,13 +101,11 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false
-        state.isLogged = true
         state.user = action.payload
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
-        state.isLogged = true
         state.message = action.payload
         state.member = null
       })
@@ -119,13 +114,11 @@ export const authSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.isLoading = false
-        state.isLogged = true
         state.user = action.payload
       })
       .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
-        state.isLogged = false
         state.message = action.payload
         state.member = null
       })
@@ -135,13 +128,11 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.isLoading = false
-        state.isLogged = false
         state.user = null
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
-        state.isLogged = true
         state.message = action.payload
       })
   },

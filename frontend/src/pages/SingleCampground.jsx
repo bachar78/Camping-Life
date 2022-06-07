@@ -36,7 +36,8 @@ const SingleCampground = () => {
     (state) => state.campgrounds
   )
   const { reviews, isSuccess } = useSelector((state) => state.reviews)
-  const { user, isLogged } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth)
+  
   useEffect(() => {
     if (isError) {
       toast.error(message)
@@ -102,14 +103,14 @@ const SingleCampground = () => {
               <Link to='/campgrounds'>
                 <motion.button variants={fade}>Back</motion.button>
               </Link>
-              <Link to={isLogged ? '/contacts' : '/login'}>
+              <Link to={user ? '/contacts' : '/login'}>
                 <motion.button variants={fade}>Book</motion.button>
               </Link>
             </Buttons>
           </MapButtons>
         </ImagesMap>
         <InfoForm>
-          {isLogged && (
+          {user && (
             <ReviewForm>
               <FormReview className='reviewForm' />
             </ReviewForm>
