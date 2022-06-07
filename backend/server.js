@@ -76,7 +76,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   //Home Route
   app.get('/', (req, res) => {
-    res.status(200).send({ message: 'Welcome to the task manager application' })
+    res.status(200).send({ message: 'Welcome to the camping life application' })
   })
 }
 //Error Handler middleware
