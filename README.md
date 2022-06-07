@@ -14,11 +14,11 @@
 </p>
 
 <p align="center">
-  <img width="20%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob5.png">
-  <img width="20%" src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob2.png">
-  <img width="20%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob3.png">
-  <img width="20%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob4.png">
-  <img width="20%" src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob1.png">
+  <img width="15%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob5.png">
+  <img width="15%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob4.png">
+  <img width="15%" src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob2.png">
+  <img width="15%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob3.png">
+  <img width="15%" src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/mob1.png">
 </p>
 
 # Camping-Life
