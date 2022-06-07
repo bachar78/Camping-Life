@@ -8,9 +8,9 @@
 </p>
 
 <p align="center">
-  <img width="35%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/tap1.png">
-  <img width="35%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/tap2.png">
-  <img width="35%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/tap3.png">
+  <img width="30%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/tap1.png">
+  <img width="30%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/tap2.png">
+  <img width="30%"  src="https://github.com/bachar78/Camping-Life/blob/eea266d5c941cdbeb05f7a4be062c37517409123/frontend/public/images/tap3.png">
 </p>
 
 <p align="center">
