@@ -19,14 +19,12 @@ const SignUp = () => {
   const { username, email, password, password2 } = formData
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { user } = useSelector(
-    (state) => state.auth
-  )
+  const { user } = useSelector((state) => state.auth)
 
   const onChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
- 
+
   const onSubmit = (e) => {
     e.preventDefault()
     if (password !== password2) {
@@ -47,6 +45,11 @@ const SignUp = () => {
     }
   }
 
+  useEffect(() => {
+    if (user) {
+      navigate('/campgrounds')
+    }
+  }, [user, navigate])
   return (
     <Container variants={pageAnimation} initial='hidden' animate='show'>
       <Video>

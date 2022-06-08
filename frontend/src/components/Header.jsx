@@ -36,7 +36,7 @@ function Header() {
         ) : (
           <>
             <li>
-              <Link to='/register'>Regist</Link>
+              <Link to='/register'>Sign Up</Link>
               {/* <Line variants={pathname==='/contacts'?UnderLine:''} initial="hidden" animate="show"/> */}
             </li>
             <li>
