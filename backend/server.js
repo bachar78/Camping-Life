@@ -57,10 +57,10 @@ passport.use(new localStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-//Home Route
-app.get('/', (req, res) => {
-  res.status(200).send({ message: 'Welcome' })
-})
+// //Home Route
+// app.get('/', (req, res) => {
+//   res.status(200).send({ message: 'Welcome' })
+// })
 
 //Routers
 app.use('/api/campgrounds', campgroundsRoutes)

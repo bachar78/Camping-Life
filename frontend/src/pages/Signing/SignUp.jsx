@@ -26,12 +26,7 @@ const SignUp = () => {
   const onChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
-  useEffect(() => {
-    if (user) {
-      toast.success('You were registered successfully')
-      navigate('/')
-    }
-  }, [user, navigate])
+ 
   const onSubmit = (e) => {
     e.preventDefault()
     if (password !== password2) {

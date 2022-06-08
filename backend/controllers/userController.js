@@ -7,10 +7,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
     res.status(400)
     throw new Error('Please fill all required fields')
   }
-  const userExist = User.findOne({ email })
-  if (userExist) {
-    throw new Error("A User exists with the same email, change email!!")
-  }
   const user = new User({ email, username })
   const newUser = await User.register(user, password)
   if (!newUser) {
@@ -19,7 +15,11 @@ const registerUser = asyncHandler(async (req, res, next) => {
   }
   req.logIn(newUser, (err) => {
     if (err) return next(err)
-    res.json(newUser)
+    res.json({
+      _id: newUser._id,
+      username: newUser.username,
+      email: newUser.email,
+    })
   })
 })
 
