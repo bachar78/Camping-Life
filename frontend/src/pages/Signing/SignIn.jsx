@@ -15,7 +15,7 @@ const SignIn = () => {
     password: '',
   })
   const dispatch = useDispatch()
-  const { user, isLoading, isError, message } = useSelector(
+  const { user, isLoading, message } = useSelector(
     (state) => state.auth
   )
   const navigate = useNavigate()
@@ -33,6 +33,11 @@ const SignIn = () => {
       navigate('/')
     }
   }, [user, navigate])
+  useEffect(() => {
+    if (message) {
+      toast.error(message)
+    }
+  }, [message])
   const onSubmit = (e) => {
     e.preventDefault()
     if (!username || !password) {
@@ -40,6 +45,10 @@ const SignIn = () => {
     }
     const userData = { username, password }
     dispatch(login(userData))
+    setFormData({
+      username: '',
+      password: '',
+    })
   }
   if (isLoading) {
     return <Spinner />
@@ -95,6 +104,8 @@ const SignIn = () => {
 
 const Container = styled(motion.div)`
   min-height: 90vh;
+  max-width: 100rem;
+  margin: 0 auto;
   position: relative;
   h1 {
     text-align: center;

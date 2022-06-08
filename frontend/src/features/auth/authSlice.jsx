@@ -109,19 +109,19 @@ export const authSlice = createSlice({
         state.message = action.payload
         state.member = null
       })
-      .addCase(getUser.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getUser.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.user = action.payload
-      })
-      .addCase(getUser.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-        state.member = null
-      })
+      // .addCase(getUser.pending, (state) => {
+      //   state.isLoading = true
+      // })
+      // .addCase(getUser.fulfilled, (state, action) => {
+      //   state.isLoading = false
+      //   state.user = action.payload
+      // })
+      // .addCase(getUser.rejected, (state, action) => {
+      //   state.isLoading = false
+      //   state.isError = true
+      //   state.message = action.payload
+      //   state.member = null
+      // })
 
       .addCase(logout.pending, (state) => {
         state.isLoading = true

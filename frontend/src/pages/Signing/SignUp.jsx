@@ -19,7 +19,7 @@ const SignUp = () => {
   const { username, email, password, password2 } = formData
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { user, isLoading, isError, isLogged, message } = useSelector(
+  const { user } = useSelector(
     (state) => state.auth
   )
 
@@ -27,11 +27,11 @@ const SignUp = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
   useEffect(() => {
-    if (isLogged) {
+    if (user) {
       toast.success('You were registered successfully')
-      navigate(-1)
+      navigate('/')
     }
-  }, [isLogged])
+  }, [user, navigate])
   const onSubmit = (e) => {
     e.preventDefault()
     if (password !== password2) {
@@ -136,6 +136,8 @@ const SignUp = () => {
 
 const Container = styled(motion.div)`
   min-height: 90vh;
+  max-width: 100rem;
+  margin: 0 auto;
   position: relative;
   h1 {
     text-align: center;

@@ -8,7 +8,7 @@ import { logout } from '../features/auth/authSlice'
 
 function Header() {
   const dispatch = useDispatch()
-  const { user, isLogged } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth)
   const onLogout = () => {
     dispatch(logout())
   }
