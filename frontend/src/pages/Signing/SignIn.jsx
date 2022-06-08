@@ -24,9 +24,9 @@ const SignIn = () => {
   const onChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
-  useEffect(() => {
-    dispatch(reset())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(reset())
+  // }, [dispatch])
 
   useEffect(() => {
     if (user) {

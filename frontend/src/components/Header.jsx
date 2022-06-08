@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { GiCampingTent } from 'react-icons/gi'
 import { Link } from 'react-router-dom'
