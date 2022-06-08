@@ -15,7 +15,6 @@ const localStrategy = require('passport-local')
 const User = require('./models/userModel')
 const MongoDBStore = require('connect-mongo')
 const path = require('path')
-const cors = require('cors')
 //connect to database
 connectDB()
 const app = express()
