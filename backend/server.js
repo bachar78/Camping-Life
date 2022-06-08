@@ -15,6 +15,7 @@ const localStrategy = require('passport-local')
 const User = require('./models/userModel')
 const MongoDBStore = require('connect-mongo')
 const path = require('path')
+const cors = require('cors')
 //connect to database
 connectDB()
 const app = express()
@@ -22,7 +23,7 @@ const app = express()
 //Body parser middleware
 app.use(express.urlencoded({ limit: '50mb', extended: true }))
 app.use(express.json({ limit: '50mb' }))
-
+app.use(cors())
 // //Cookies parser middleware
 // app.use(cookieParser(process.env.EXPRESS_SESSION))
 
